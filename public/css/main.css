@@ -1,0 +1,298 @@
+.section {
+    position: relative;
+    height: 100vh
+}
+
+.section .section-center {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%)
+}
+
+#booking {
+    font-family: 'Raleway', sans-serif
+}
+
+.booking-form {
+    position: relative;
+    max-width: 500px;
+    width: 100%;
+    margin-left: 1px;
+    margin-top: 40px;
+    padding: 30px;
+    overflow: hidden;
+    background-size: cover;
+    border-radius: 5px;
+    z-index: 20
+}
+
+.booking-form::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: -1
+}
+
+.booking-form .form-header {
+    text-align: center;
+    position: relative;
+    margin-bottom: 30px;
+}
+
+.booking-form .form-group {
+    position: relative;
+    margin-bottom: 30px
+}
+
+.booking-form .form-control {
+    background-color: rgba(255, 255, 255, 0.2);
+    height: 60px;
+    padding: 0px 25px;
+    border: none;
+    border-radius: 40px;
+    color: #fff;
+    -webkit-box-shadow: 0px 0px 0px 2px transparent;
+    box-shadow: 0px 0px 0px 2px transparent;
+    -webkit-transition: 0.2s;
+    transition: 0.2s
+}
+
+.booking-form .form-control::-webkit-input-placeholder {
+    color: rgba(255, 255, 255, 0.5)
+}
+
+.booking-form .form-control:-ms-input-placeholder {
+    color: rgba(255, 255, 255, 0.5)
+}
+
+.booking-form .form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5)
+}
+
+.booking-form .form-control:focus {
+    -webkit-box-shadow: 0px 0px 0px 2px #ff8846;
+    box-shadow: 0px 0px 0px 2px #ff8846
+}
+
+.booking-form input[type="date"].form-control {
+    padding-top: 16px
+}
+
+.booking-form input[type="date"].form-control:invalid {
+    color: rgba(255, 255, 255, 0.5)
+}
+
+.booking-form input[type="date"].form-control+.form-label {
+    opacity: 1;
+    top: 10px
+}
+
+.booking-form select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none
+}
+
+.booking-form select.form-control:invalid {
+    color: rgba(255, 255, 255, 0.5)
+}
+
+.booking-form select.form-control+.select-arrow {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 32px;
+    line-height: 32px;
+    height: 32px;
+    text-align: center;
+    pointer-events: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px
+}
+
+.booking-form select.form-control+.select-arrow:after {
+    content: '\279C';
+    display: block;
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg)
+}
+
+.booking-form select.form-control option {
+    color: #000
+}
+
+.booking-form .form-label {
+    position: absolute;
+    top: -10px;
+    left: 25px;
+    opacity: 0;
+    color: #ff8846;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+    height: 15px;
+    line-height: 15px;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all
+}
+
+.booking-form .form-group.input-not-empty .form-control {
+    padding-top: 16px
+}
+
+.booking-form .form-group.input-not-empty .form-label {
+    opacity: 1;
+    top: 10px;
+}
+
+.booking-form .submit-btn {
+    color: #fff;
+    background-color: #e35e0a;
+    font-weight: 700;
+    height: 60px;
+    /* padding: 10px 30px; */
+    width: 100%;
+    border-radius: 40px;
+    border: none;
+    text-transform: uppercase;
+    font-size: 16px;
+    letter-spacing: 1.3px;
+    -webkit-transition: 0.2s all;
+    transition: 0.2s all
+}
+
+.booking-form .submit-btn:hover,
+.booking-form .submit-btn:focus {
+    opacity: 0.9
+}
+#nav_bar{
+    padding-bottom: 40px;
+}
+#date_select {
+    
+    padding: 85px 0 90px;
+    position: relative;
+    background: url("https://cloudflare1.360gigapixels.com/pano/vishnu/00202012_crop-jpg/equirect_crop_3_1/6.jpg");
+    background-color: rgba(0, 0, 0, 0);
+    background-position-x: 0%;
+    background-position-y: 0%;
+    background-repeat: repeat;
+    background-attachment: scroll;
+    background-size: auto;
+    background-origin: padding-box;
+    background-clip: border-box;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+#footer{
+    background-color:#FDF6F0;
+}
+body {
+    font-family: 'Playfair Display', serif;
+}
+/*body{min-height:200vh;}*/
+.navbar-default{
+  transition:500ms ease;
+  background:transparent;
+}
+.navbar-default.scrolled{
+  background:#000;
+}
+
+input[type=text],
+    input[type=password] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 2px solid #ccc;
+        box-sizing: border-box;
+    }
+    /* set a style for all buttons*/
+    button {
+        background-color: green;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        cursor: pointer;
+        width: 100%;
+    }
+    /*set styles for the cancel button*/
+    .cancelbtn {
+        padding: 14px 20px;
+        background-color: #FF2E00;
+    }
+    /*float cancel and signup buttons and add an equal width*/
+    .cancelbtn,
+    .signupbtn {
+        float: left;
+        width: 50%
+    }
+    /*add padding to container elements*/
+    .container {
+        padding: 16px;
+    }
+    /*define the modal’s background*/
+     
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgb(0, 0, 0);
+        background-color: rgba(0, 0, 0, 0.4);
+        padding-top: 60px;
+    }
+    /*define the modal-content background*/
+     
+    .modal-content {
+        background-color: #fefefe;
+        margin: 5% auto 15% auto;
+        border: 1px solid #888;
+        width: 80%;
+    }
+    /*define the close button*/
+     
+    .close {
+        position: absolute;
+        right: 35px;
+        top: 15px;
+        color: #000;
+        font-size: 40px;
+        font-weight: bold;
+    }
+    /*define the close hover and focus effects*/
+     
+    .close:hover,
+    .close:focus {
+        color: red;
+        cursor: pointer;
+    }
+     
+    .clearfix::after {
+        content: "";
+        clear: both;
+        display: table;
+    }
+     
+    @media screen and (max-width: 300px) {
+        .cancelbtn,
+        .signupbtn {
+            width: 100%;
+        }
+    }
