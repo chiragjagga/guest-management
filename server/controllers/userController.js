@@ -1,5 +1,6 @@
 const mysql = require('mysql');
 const sessions = require('express-session');
+const e = require('express');
 
 
 var session;
@@ -17,7 +18,7 @@ let connection = mysql.createConnection({
 exports.view = (req, res) => {
   // User the connection
 
-  console.log("user se aaya");
+  //console.log("user se aaya");
   connection.query('SELECT * FROM rooms', (err, rows) => {
     // When done with the connection, release it
 
@@ -50,6 +51,7 @@ exports.view = (req, res) => {
       if (!err) {
         session=req.session;
         session.userid=rno[1];
+        session.type='user';
         res.redirect('/');
       } else {
         console.log(err);
@@ -59,23 +61,28 @@ exports.view = (req, res) => {
   }else if(tab==0){
     connection.query('SELECT RollNo, Password from users where RollNO=?',[rno[0]],(err,rows)=>{
       //console.log(rows[0].RollNo);
-      const myusername=rows[0].RollNo;
-      const mypassword=rows[0].Password;
+      if(rows.length>0)
+      {
+        const myusername=rows[0].RollNo;
+        const mypassword=rows[0].Password;
       //console.log(myusername,mypassword)
-      if(req.body.rno[0] == myusername && req.body.pass[0] == mypassword){
-        session=req.session;
-        session.userid=req.body.rno[0];
-        console.log(req.session);
-    }
-    else{
-        console.log('Invalid username or password');
-    }
+          if(req.body.rno[0] == myusername && req.body.pass[0] == mypassword){
+            session=req.session;
+            session.userid=req.body.rno[0];
+            session.type='user';
+            console.log(req.session);
+        }else{
+          console.log('Invalid username or password');
+      }
+      }else{
+        console.log("kuch nhi aayega");
+      }
+    
     res.redirect('/user');
     //router.get('/user', userController.userpage);
     });
-     
-  }
 
+  }
     // console.log(tab,rno,pass,name,email,rpass);
 }
 
@@ -85,9 +92,7 @@ exports.logout = (req, res) => {
   res.redirect('/');
 }
 
-
 //Form
-
 exports.userpage = (req, res) => {
   // User the connection
    session=req.session;
@@ -98,4 +103,80 @@ exports.userpage = (req, res) => {
     }else
     res.render('user');
     
+}
+
+//admin login
+exports.adminview = (req, res) => {
+  //res.render('admin')
+  session=req.session;
+   console.log("session ",session.userid);
+    if(session.userid){
+      console.log("After admin login");
+      res.redirect('/');
+    }else
+    res.render('admin');
+
+}
+
+//admin
+exports.admin = (req, res) => {
+  const {pass,email}=req.body;
+  console.log(pass,email);
+  connection.query('SELECT email, password,name from admin where status=1 and email=?',[email],(err,rows)=>{
+    //connection.query('SELECT RollNo, Password from users where RollNO=?',[rno[0]],(err,rows)=>{
+    //console.log("12312656");
+    //console.log(rows);
+    if(rows.length>0)
+      {
+        const myusername=rows[0].name;
+        const mypassword=rows[0].password;
+        const myemail=rows[0].email;
+        console.log(myusername,mypassword,myemail);
+        if(req.body.email== myemail && req.body.pass == mypassword){
+          session=req.session;
+          session.userid=myusername;
+          session.type='admin';
+          console.log(req.session);
+      }
+      else{
+          console.log('Invalid username or password');
+      }
+    }else{
+      console.log("kuch nhi aayega");
+    }
+  res.redirect('/admin');
+  //router.get('/user', userController.userpage);
+  });
+}
+
+exports.manage= (req, res) => {
+  //res.render('manage');
+  console.log(req.query.type);
+  //const typ=req.query.type;
+  if(req.query.type=="managers")
+  {
+    coulmnArray = ['ID','Name','RollNo','Email','status'];
+    connection.query('SELECT * from admin' ,(err,rows)=>{
+    //console.log(rows);
+    res.render('manage', { rows ,coulmnArray})
+    console.log(rows,coulmnArray);
+    
+    });
+
+  }else if(req.query.type=="bookingManage"){
+    coulmnArray = ['ID','Name','RollNo','Email','status'];
+    connection.query('SELECT * from admin' ,(err,rows)=>{
+    //console.log(rows);
+    res.render('manage', { rows ,coulmnArray});
+    console.log(rows,coulmnArray);
+  });
+
+  }else if(req.query.type="userManage"){
+    coulmnArray = ['ID','Name','RollNo','Email','status'];
+    connection.query('SELECT * from users' ,(err,rows)=>{
+    //console.log(rows);
+    res.render('manage', { rows ,coulmnArray})
+    console.log(rows,coulmnArray);
+  });
+  }
 }

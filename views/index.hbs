@@ -39,8 +39,10 @@
                 </ul> --}}
                 {{#if removedUser}}
                     <ul class="nav navbar-nav navbar-right">
-                        
-                        <li><span>{{this.removedUser}}&nbsp; &nbsp;</br><a href="/logout" style="width:auto;" aria-current="page">Logout</a></span>
+    
+                        {{!-- <li> <span class="navbar-text"></span>{{this.removedUser}}</li> --}}
+                        <li>
+                            <button class="btn btn-sm btn-outline-primary" type="button"><a href="/logout" style="width:auto;" aria-current="page"> Logout</a></button>
                         </li>
                     </ul>
                 {{else}}
