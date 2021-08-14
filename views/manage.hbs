@@ -49,6 +49,13 @@
                             <p>Bookings</p>
                         </a>
                     </li>
+                    <li>
+                        <a class="nav-link" href="/manage?type=rooms">
+                            <i class="nc-icon nc-circle-09"></i>
+                            <p>Rooms</p>
+                        </a>
+                    </li>
+
                 </ul>
             </div>
         </div>
@@ -79,9 +86,12 @@
                         <ul class="navbar-nav ml-auto">
                             
                             <li class="nav-item">
-                                <a class="nav-link" href="#pablo">
-                                    <span class="no-icon">Log out</span>
-                                </a>
+                                {{!-- <a class="nav-link" href="#pablo">
+                                    <span class="no-icon" href="/logout" >Log out</span>
+                                </a> --}}
+                               
+                            <button class="btn btn-sm btn-outline-primary" type="button"><a href="/logout" style="width:auto;" aria-current="page"> Logout</a></button>
+                      
                             </li>
                         </ul>
                     </div>
@@ -93,8 +103,8 @@
                         <div class="col-md-12">
                             <div class="card card-plain table-plain-bg">
                                 <div class="card-header ">
-                                    <h4 class="card-title">Manager's Table</h4>
-                                    <p class="card-category">Details of the manager </p>
+                                    <h4 class="card-title">{{nm}} Table</h4>
+                                    <p class="card-category">Details of the {{nm}} </p>
                                 </div>
                                 <div class="card-body table-full-width table-responsive">
                                     <table class="table table-hover">
@@ -113,6 +123,7 @@
                                                     <td>{{this.this}}</td>
                                                 {{/each}}
                                                 <td><button type="button" onclick="" class="btn btn-primary">Update</button></td>
+                                                <td><button type="button" onclick="" class="btn btn-primary">Delete</button></td>
                                             </tr>
                                             {{/each}}
                                     </table>

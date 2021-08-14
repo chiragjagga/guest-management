@@ -88,8 +88,13 @@ exports.view = (req, res) => {
 
 //logout
 exports.logout = (req, res) => {
+  let x=session.userid ;
   req.session.destroy();
-  res.redirect('/');
+
+  if(x=='admin')
+    res.redirect('/admin');
+  else 
+    res.redirect('/');
 }
 
 //Form
@@ -122,29 +127,33 @@ exports.adminview = (req, res) => {
 exports.admin = (req, res) => {
   const {pass,email}=req.body;
   console.log(pass,email);
-  connection.query('SELECT email, password,name from admin where status=1 and email=?',[email],(err,rows)=>{
+  connection.query('SELECT email, password,name from admin where del_id=0 and email=?',[email],(err,rows)=>{
     //connection.query('SELECT RollNo, Password from users where RollNO=?',[rno[0]],(err,rows)=>{
     //console.log("12312656");
     //console.log(rows);
-    if(rows.length>0)
-      {
-        const myusername=rows[0].name;
-        const mypassword=rows[0].password;
-        const myemail=rows[0].email;
-        console.log(myusername,mypassword,myemail);
-        if(req.body.email== myemail && req.body.pass == mypassword){
-          session=req.session;
-          session.userid=myusername;
-          session.type='admin';
-          console.log(req.session);
+    if (!err) {
+      if(rows.length>0)
+        {
+          const myusername=rows[0].name;
+          const mypassword=rows[0].password;
+          const myemail=rows[0].email;
+          console.log(myusername,mypassword,myemail);
+          if(req.body.email== myemail && req.body.pass == mypassword){
+            session=req.session;
+            session.userid=myusername;
+            session.type='admin';
+            console.log(req.session);
+        }
+        else{
+            console.log('Invalid username or password');
+        }
+      }else{
+        console.log("kuch nhi aayega");
       }
-      else{
-          console.log('Invalid username or password');
-      }
-    }else{
-      console.log("kuch nhi aayega");
-    }
-  res.redirect('/admin');
+  }else{
+        console.log(err);
+  }
+  res.redirect('/manage?type=managers');
   //router.get('/user', userController.userpage);
   });
 }
@@ -152,30 +161,43 @@ exports.admin = (req, res) => {
 exports.manage= (req, res) => {
   //res.render('manage');
   console.log(req.query.type);
+  let nm;
   //const typ=req.query.type;
-  if(req.query.type=="managers")
+  if(req.query.type=="userManage")
   {
-    coulmnArray = ['ID','Name','RollNo','Email','status'];
-    connection.query('SELECT * from admin' ,(err,rows)=>{
+    nm="Users";
+    coulmnArray = ['ID','Name','RollNo','Email','Password','status'];
+    connection.query('SELECT * from users' ,(err,rows)=>{
     //console.log(rows);
-    res.render('manage', { rows ,coulmnArray})
+    res.render('manage', { rows ,coulmnArray,nm})
     console.log(rows,coulmnArray);
     
     });
 
-  }else if(req.query.type=="bookingManage"){
-    coulmnArray = ['ID','Name','RollNo','Email','status'];
+  }else if(req.query.type=="managers"){
+      nm="Managers";
+    coulmnArray = ['ID','Name','Email','Password','Del_id'];
     connection.query('SELECT * from admin' ,(err,rows)=>{
     //console.log(rows);
-    res.render('manage', { rows ,coulmnArray});
+    res.render('manage', { rows ,coulmnArray,nm});
     console.log(rows,coulmnArray);
   });
 
-  }else if(req.query.type="userManage"){
-    coulmnArray = ['ID','Name','RollNo','Email','status'];
-    connection.query('SELECT * from users' ,(err,rows)=>{
+  }else if(req.query.type=="bookingsManage"){
+    nm="Bookings";
+    coulmnArray = ['ID','USer_ID','CheckIn','CheckOut','MobileNumber','Room_Id','GuestNameList','GuestAgeList','Amount','Status'];
+    connection.query('SELECT * from bookings' ,(err,rows)=>{
     //console.log(rows);
-    res.render('manage', { rows ,coulmnArray})
+    res.render('manage', { rows ,coulmnArray,nm})
+    console.log(rows,coulmnArray);
+  });
+
+  }else if(req.query.type=="rooms"){
+    nm="Rooms";
+    coulmnArray = ['ID','Name','Price','No of Rooms','No Of Guests'];
+    connection.query('SELECT ID,Name,Price,NoOfRooms,NoOfGuests from rooms' ,(err,rows)=>{
+    //console.log(rows);
+    res.render('manage', { rows ,coulmnArray,nm})
     console.log(rows,coulmnArray);
   });
   }
