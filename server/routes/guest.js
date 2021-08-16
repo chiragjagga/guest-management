@@ -14,7 +14,6 @@ router.get('/admin',userController.adminview)
 router.post('/admin',userController.admin)
 
 router.get('/manage',userController.manage)
-
 router.get('/manage/:id', userController.manage);
 //router.post('/edituser/:id', userController.update);
   

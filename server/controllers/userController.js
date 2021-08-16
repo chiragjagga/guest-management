@@ -24,9 +24,11 @@ exports.view = (req, res) => {
 
     if (!err) {
       session=req.session;
-     if(!session.userid) res.render('index', { rows });
+      const value=req.query.referer;
+      console.log(req.query,req.params);
+     if(!session.userid) res.render('index', { rows,value });
      else { let removedUser=session.userid;
-       res.render('index', { rows ,removedUser})}
+       res.render('index', { rows ,removedUser,value})}
 
     } else {
       console.log(err);
@@ -52,7 +54,7 @@ exports.view = (req, res) => {
         session=req.session;
         session.userid=rno[1];
         session.type='user';
-        res.redirect('/');
+        res.redirect('/?referer=signup');
       } else {
         console.log(err);
       }
@@ -71,6 +73,7 @@ exports.view = (req, res) => {
             session.userid=req.body.rno[0];
             session.type='user';
             console.log(req.session);
+            res.redirect('/?referer=login');
         }else{
           console.log('Invalid username or password');
       }
@@ -78,7 +81,7 @@ exports.view = (req, res) => {
         console.log("kuch nhi aayega");
       }
     
-    res.redirect('/user');
+    //res.redirect('/user');
     //router.get('/user', userController.userpage);
     });
 
@@ -94,7 +97,7 @@ exports.logout = (req, res) => {
   if(x=='admin')
     res.redirect('/admin');
   else 
-    res.redirect('/');
+    res.redirect('/?referer=logout');
 }
 
 //Form
@@ -117,10 +120,10 @@ exports.adminview = (req, res) => {
    console.log("session ",session.userid);
     if(session.userid){
       console.log("After admin login");
-      res.redirect('/');
-    }else
-    res.render('admin');
-
+      res.redirect('/?referer=login');
+    }else{
+        res.render('admin');
+  }
 }
 
 //admin

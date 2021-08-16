@@ -14,6 +14,7 @@
     <title>NITC GUEST MANAGEMENT</title>
 </head>
 <body>
+
     <!-- nav bar -->
     <section id="date_select">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -53,10 +54,13 @@
                         
                     </ul>
                 {{/if}}
+
               </div>
             </div>
           </nav>
-    
+
+          
+
 <!--     
     <section id="date_select">
         <nav class="navbar bg-transparent navbar-expand-lg navbar-light fixed-top">
@@ -123,6 +127,7 @@
     </div> --}}
  
 <br>
+
     <br>
 <!--for searching-->
 <!-- <div class="row justify-content-center"> -->
@@ -156,10 +161,23 @@
                 </div>
             </div>
         </div>
+
     </section>
 
     <!--types of rooms-->
     <section id="type_of_rooms" style="margin-top: 75px; margin-bottom:35px;">
+           
+           {{#ifEquals value "logout"}}
+                {{!-- <script> --}}
+                    {{!-- alert("Signed up successfully"); --}}
+                        <div class="alert alert-warning alert-dismissible show " role="alert">
+                        <strong>User has been removed.</strong>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                {{!-- </script> --}}
+                {{/ifEquals}}
+
+
         <h2 class="text-center">TYPES OF ROOMS</h2>
         <br>
         <br>

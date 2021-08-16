@@ -5,6 +5,8 @@ const mysql = require('mysql');
 const cookieParser = require("cookie-parser");
 const sessions = require('express-session');
 
+var hbs = exphbs.create({});
+
 const oneDay = 1000 * 60 * 60 * 24;
 
 // cookie parser middleware
@@ -46,3 +48,7 @@ const routes = require('./server/routes/guest');
 app.use('/', routes);
 
 app.listen(port, () => console.log(`Listening on port ${port}`));
+
+hbs.handlebars.registerHelper('ifEquals', function(arg1, arg2, options) {
+    return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
+});
