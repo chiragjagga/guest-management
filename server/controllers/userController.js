@@ -2,9 +2,7 @@ const mysql = require('mysql');
 const sessions = require('express-session');
 const e = require('express');
 
-
 var session;
-
 
 // Connection Pool
 let connection = mysql.createConnection({
@@ -156,7 +154,7 @@ exports.admin = (req, res) => {
   }else{
         console.log(err);
   }
-  res.redirect('/manage?type=managers');
+  res.redirect('/manage?type=dashboard');
   //router.get('/user', userController.userpage);
   });
 }
@@ -203,5 +201,11 @@ exports.manage= (req, res) => {
     res.render('manage', { rows ,coulmnArray,nm})
     console.log(rows,coulmnArray);
   });
+  }
+
+  else if(req.query.type=="dashboard" ||res.query==undefined){
+    nm="Dashboard";
+    res.render('manage', {nm})
+        
   }
 }
