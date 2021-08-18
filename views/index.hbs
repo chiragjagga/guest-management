@@ -12,11 +12,15 @@
     <link rel="stylesheet" href="css/book.css">
     <script src="script.js"></script>
     <title>NITC GUEST MANAGEMENT</title>
-    </script>
+    <script type="text/javascript">
+    function func(){
+      window.open("user");
+    }
+</script>
 </head>
 <body style="font-family: 'Roboto Slab', serif;">
   <header class="header">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">
                 <img src="images/logo.jpg" alt="logo" style="width: 50px; height: 50px; border-radius: 50%;"></a>
@@ -26,27 +30,25 @@
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Home</a>
+                    <a class="nav-link" aria-current="page" href="index">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                  </li>
-                  
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Rooms</a>
+                    <a class="nav-link" href="rooms">Rooms</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" href="#">Contact</a>
                   </li>
                 </ul>
                 <ul class="navbar-nav ms-auto">
-                    <button class="btn btn-primary"><img src="images/loginlogo.png" style="width:20px; height:25px; border-radius:100%; margin-right: 10px;" alt="sign up">Login</button> 
+                    <button class="btn btn-primary" onclick="func()"><img src="images/loginlogo.png" style="width:20px; height:25px; border-radius:100%; margin-right: 10px;" alt="sign up">Login</button> 
                 </ul>
               </div>
             </div>
           </nav>
     </header>
-    
+    <br>
+    <br>
+    <section>
     <div id="booking" class="section">
 		<div class="section-center">
 			<div class="container">
@@ -140,6 +142,7 @@
 			</div>
 		</div>
 	</div>
+  </section>
     <section id="type_of_rooms" style="margin-bottom:25px;">
       <h2 class="text-center">TYPES OF ROOMS</h2>
         <br>
@@ -159,19 +162,27 @@
     {{!-- slideshow --}}
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel" style="margin: 78px;">
         <div class="carousel-inner">
-          <div class="carousel-item active" data-interval="500">
-            <img src="images/3.png" class="d-block w-100" alt="..." style="height:300px">
+          <div class="carousel-item active" data-bs-interval="5000">
+            <img src="images/3.png" class="d-block w-100 rounded overflow-auto" alt="..." style="height:300px;">
           </div>
-          <div class="carousel-item" data-interval="500">
-            <img src="images/2.jpg" class="d-block w-100" alt="..." style="height:300px">
+          <div class="carousel-item" data-bs-interval="600">
+            <img src="images/2.jpg" class="d-block w-100 rounded overflow-auto" alt="..." style="height:300px">
           </div>
-          <div class="carousel-item" data-interval="500">
-            <img src="images/1.png" class="d-block w-100" alt="..." style="height:300px">
+          <div class="carousel-item" data-bs-interval="500">
+            <img src="images/image.jpg" class="d-block w-100 rounded overflow-auto" alt="..." style="height:300px">
           </div>
-          <div class="carousel-item" data-interval="500">
-            <img src="images/4.jpg" class="d-block w-100" alt="..." style="height:300px">
+          <div class="carousel-item" data-bs-interval="500">
+            <img src="images/4.jpg" class="d-block w-100 rounded overflow-auto" alt="..." style="height:300px">
           </div>
         </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
       </div>
     {{!-- FOOTER --}}
     <section id="footer">
