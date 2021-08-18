@@ -27,6 +27,20 @@
               <div class="col">
                   <!--<div class="col-md-6 mx-auto p-0">-->
                       <!--<div class="card">-->
+                          {{#ifEquals errcode "inv"}}
+							<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+						 Invalid password!
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				{{/ifEquals}}
+
+				{{#ifEquals errcode "NotExist"}}
+							<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+						 User not exist!
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				{{/ifEquals}}
+
                           <div class="login-box">
                               <form method="POST" action="/user" novalidate>
                                   <div class="login-snip">
@@ -58,7 +72,7 @@
                       </div>
                   </div>
               </div>
-          <!-- </div> 
-          </div>-->
+          
+
 </body>
 </html>

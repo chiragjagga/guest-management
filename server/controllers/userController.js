@@ -39,7 +39,6 @@ exports.view = (req, res) => {
 }
 
 //user login/signup
-
  exports.user = (req, res) => {
 
   const {tab,rno,pass,name,email,rpass}=req.body;
@@ -77,9 +76,11 @@ exports.view = (req, res) => {
             res.redirect('/?referer=login');
         }else{
           console.log('Invalid username or password');
+          res.redirect('/user?errorcode=inv');
       }
       }else{
         console.log("kuch nhi aayega");
+        res.redirect('/user?errorcode=notExist');
       }
     
     //res.redirect('/user');
@@ -110,9 +111,11 @@ exports.userpage = (req, res) => {
     if(session.userid){
       console.log("After login");
       res.redirect('/');
-    }else
-    res.render('user');
-    
+    }else{
+    //res.render('user');
+    const errcode=req.query.errorcode;
+      res.render('user',{errcode});
+    }
 }
 
 //admin login
@@ -129,7 +132,6 @@ exports.adminview = (req, res) => {
         res.redirect('/manage');
       }
     }else{
-      console.log()
       const errcode=req.query.errorcode;
         res.render('admin',{errcode});
   }
