@@ -23,18 +23,20 @@ exports.view = (req, res) => {
     if (!err) {
       session=req.session;
       const value=req.query.referer;
+      let removedUser=session.userid;
       console.log(req.query,req.params);
-     if(!session.userid) res.render('index', { rows,value });
-     else { let removedUser=session.userid;
+    //  if(!session.userid) res.render('index', { rows,removedUser,value});
+    //  else { 
+            // let uname=session.
        res.render('index', { rows ,removedUser,value})}
 
-    } else {
+    //}
+     else {
       console.log(err);
     }
     //console.log('The data from user table: \n', rows);
   });
 }
-
 
 //user login/signup
 
@@ -51,6 +53,7 @@ exports.view = (req, res) => {
       if (!err) {
         session=req.session;
         session.userid=rno[1];
+        let removedUser
         session.type='user';
         res.redirect('/?referer=signup');
       } else {
@@ -89,13 +92,14 @@ exports.view = (req, res) => {
 
 //logout
 exports.logout = (req, res) => {
-  let x=session.userid ;
+  let x=session.userid;
   req.session.destroy();
 
   if(x=='admin')
     res.redirect('/admin');
-  else 
-    res.redirect('/?referer=logout');
+  else {
+    res.redirect("/?referer=logout");
+  }
 }
 
 //Form
@@ -116,11 +120,18 @@ exports.adminview = (req, res) => {
   //res.render('admin')
   session=req.session;
    console.log("session ",session.userid);
-    if(session.userid){
+    if(session.userid)
+    { 
+      if (session.type=="user"){
       console.log("After admin login");
       res.redirect('/?referer=login');
+      }else{
+        res.redirect('/manage');
+      }
     }else{
-        res.render('admin');
+      console.log()
+      const errcode=req.query.errorcode;
+        res.render('admin',{errcode});
   }
 }
 
@@ -144,24 +155,31 @@ exports.admin = (req, res) => {
             session.userid=myusername;
             session.type='admin';
             console.log(req.session);
+
+            res.redirect('/manage?type=dashboard');
         }
         else{
+          
             console.log('Invalid username or password');
+            res.redirect('/admin?errorcode=inv');
         }
       }else{
         console.log("kuch nhi aayega");
+        res.redirect('/admin?errorcode=NotExist');
       }
   }else{
         console.log(err);
   }
-  res.redirect('/manage?type=dashboard');
   //router.get('/user', userController.userpage);
   });
 }
 
+//manage
 exports.manage= (req, res) => {
   //res.render('manage');
-  console.log(req.query.type);
+  if(session.type=="admin")
+  {
+    console.log(req.query.type);
   let nm;
   //const typ=req.query.type;
   if(req.query.type=="userManage")
@@ -206,6 +224,9 @@ exports.manage= (req, res) => {
   else if(req.query.type=="dashboard" ||res.query==undefined){
     nm="Dashboard";
     res.render('manage', {nm})
+  }
+  }else{
+    res.redirect("/admin");
   }
 }
 

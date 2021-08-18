@@ -16,9 +16,23 @@
 	</head>
   <body>
   	<div>
+
   		<div class="row row-cols-1 row-cols-lg-2">
 				<div class="col"><img src="images/adminphoto.webp" style="width:620px; height:600px;  top:-199px; left:720px;" alt="cake"></div>
 			<div class="col">
+					{{#ifEquals errcode "inv"}}
+							<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+						<strong> {{x}}</strong> Invalid password!
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				{{/ifEquals}}
+
+				{{#ifEquals errcode "NotExist"}}
+							<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+						<strong> {{x}}</strong> User not exist!
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				{{/ifEquals}}
 				<h3 class="mb-4 text-center" style="margin-top: 170px;">Admin Login</h3>
 					<form action="/admin" method="POST" class="signin-form " style="width: 300px; height: 150px; margin-left:150px">
 						<div class="form-group">
