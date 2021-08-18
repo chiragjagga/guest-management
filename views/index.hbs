@@ -20,7 +20,11 @@
 </head>
 <body style="font-family: 'Roboto Slab', serif;">
   <header class="header">
+<<<<<<< HEAD
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+=======
+        <nav class="navbar navbar-fixed-top navbar-expand-lg navbar-dark bg-dark">
+>>>>>>> 936ef8f2a13e071da056710c201a3cd5c06a9c9e
             <div class="container-fluid">
               <a class="navbar-brand" href="#">
                 <img src="images/logo.jpg" alt="logo" style="width: 50px; height: 50px; border-radius: 50%;"></a>
@@ -39,9 +43,26 @@
                     <a class="nav-link" href="#">Contact</a>
                   </li>
                 </ul>
+<<<<<<< HEAD
                 <ul class="navbar-nav ms-auto">
                     <button class="btn btn-primary" onclick="func()"><img src="images/loginlogo.png" style="width:20px; height:25px; border-radius:100%; margin-right: 10px;" alt="sign up">Login</button> 
                 </ul>
+=======
+                 {{#if removedUser}}
+                    <ul class="navbar-nav ms-auto">
+                          <button class="btn btn-primary" type="button">
+                            <img src="images/loginlogo.png" style="width:20px; height:25px; border-radius:100%; margin-right: 10px;" alt="sign up">
+                            <a href="/logout" style="width:auto; text-decoration: none; color:white;" aria-current="page"> Logout</a></button>
+                    </ul>
+                {{else}}
+                    <ul class="navbar-nav ms-auto">
+                        <button class="btn btn-primary" type="button">
+                          <img src="images/loginlogo.png" style="width:20px; height:25px; border-radius:100%; margin-right: 10px;" alt="sign up">
+                          <a href="user" style="text-decoration: none; color:white ;">Login</a></button> 
+                    </ul>
+                {{/if}}
+
+>>>>>>> 936ef8f2a13e071da056710c201a3cd5c06a9c9e
               </div>
             </div>
           </nav>
@@ -50,6 +71,26 @@
     <br>
     <section>
     <div id="booking" class="section">
+                {{#ifEquals value "login"}}
+                        <div class="alert alert-primary alert-dismissible fade show text-center" role="alert">
+                      Hello<strong> {{removedUser}}</strong>, you have logged in succesfully!
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {{/ifEquals}}
+
+                {{#ifEquals value "logout"}}
+                        <div class="alert alert-primary alert-dismissible fade show text-center" role="alert">
+                       <strong> {{removedUser}}</strong> You have been logged out succesfully!
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {{/ifEquals}}
+
+                {{#ifEquals value "signup"}}
+                        <div class="alert alert-primary alert-dismissible fade show text-center" role="alert">
+                       Hey <strong> {{removedUser}}</strong>, you have signed up succesfully!
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {{/ifEquals}}
 		<div class="section-center">
 			<div class="container">
 				<div class="row">
@@ -150,7 +191,7 @@
         <div class="container">
             <div class="row row-cols-2 row-cols-lg-4">
                     {{#each rows}}
-                <div class="col"> <a id="1bed" href=""><img class="img-thumbnail" src="images/{{this.Imagepath}}.jpg" alt="room1" style="width: 600px; height:200px; border-radius:10%;" ></a>
+                <div class="col"> <a id="1bed" href="/rooms"><img class="img-thumbnail" src="images/{{this.Imagepath}}.jpg" alt="room1" style="width: 600px; height:200px; border-radius:10%;" ></a>
                    <label id="1bed"><strong>{{this.Name}}</strong></label> </br>
                    <label id="1bed"><strong>{{this.Price}}</strong></label>
                 </div>
@@ -162,6 +203,7 @@
     {{!-- slideshow --}}
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel" style="margin: 78px;">
         <div class="carousel-inner">
+<<<<<<< HEAD
           <div class="carousel-item active" data-bs-interval="5000">
             <img src="images/3.png" class="d-block w-100 rounded overflow-auto" alt="..." style="height:300px;">
           </div>
@@ -173,6 +215,19 @@
           </div>
           <div class="carousel-item" data-bs-interval="500">
             <img src="images/4.jpg" class="d-block w-100 rounded overflow-auto" alt="..." style="height:300px">
+=======
+          <div class="carousel-item active" data-interval="100">
+            <img src="images/3.png" class="d-block w-100 rounded" alt="..." style="height:300px">
+          </div>
+          <div class="carousel-item" data-interval="100">
+            <img src="images/2.jpg" class="d-block w-100 rounded" alt="..." style="height:300px">
+          </div>
+          <div class="carousel-item" data-interval="100">
+            <img src="images/1.png" class="d-block w-100 rounded" alt="..." style="height:300px">
+          </div>
+          <div class="carousel-item" data-interval="100">
+            <img src="images/4.jpg" class="d-block w-100 rounded" alt="..." style="height:300px">
+>>>>>>> 936ef8f2a13e071da056710c201a3cd5c06a9c9e
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">

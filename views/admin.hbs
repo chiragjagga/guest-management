@@ -13,14 +13,31 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 	
 	<link rel="stylesheet" href="css/style.css">
-
 	</head>
   <body>
   	<div>
+
   		<div class="row row-cols-1 row-cols-lg-2">
 				<div class="col"><img src="images/adminphoto.webp" style="width:100%; height:120%;  top:-199px; left:720px;" alt="cake"></div>
 			<div class="col">
+<<<<<<< HEAD
 				<h3 class="mb-4" style="margin-top: 170px; padding-left:35%">Admin Login</h3>
+=======
+					{{#ifEquals errcode "inv"}}
+							<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+						<strong> {{x}}</strong> Invalid password!
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				{{/ifEquals}}
+
+				{{#ifEquals errcode "NotExist"}}
+							<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+						<strong> {{x}}</strong> User not exist!
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+				{{/ifEquals}}
+				<h3 class="mb-4 text-center" style="margin-top: 170px;">Admin Login</h3>
+>>>>>>> 936ef8f2a13e071da056710c201a3cd5c06a9c9e
 					<form action="/admin" method="POST" class="signin-form " style="width: 300px; height: 150px; margin-left:150px">
 						<div class="form-group">
 							<input type="text" name="email" class="form-control" placeholder="Username" required>
