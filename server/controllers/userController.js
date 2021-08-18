@@ -206,6 +206,9 @@ exports.manage= (req, res) => {
   else if(req.query.type=="dashboard" ||res.query==undefined){
     nm="Dashboard";
     res.render('manage', {nm})
-        
   }
+}
+
+exports.rooms = (req, res) => {  
+    res.render('rooms');
 }
