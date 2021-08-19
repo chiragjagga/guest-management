@@ -214,7 +214,7 @@ exports.manage= (req, res) => {
     connection.query('SELECT * from users' ,(err,rows)=>{
     //console.log(rows);
     res.render('manage', { rows ,coulmnArray,nm})
-    console.log(rows,coulmnArray);
+    console.log(rows,coulmnArray,nm);
     
     });
 
@@ -259,6 +259,7 @@ exports.rooms = (req, res) => {
     res.render('rooms');
 }
 
+<<<<<<< Updated upstream
 exports.about = (req, res) => {  
   res.render('about');
 }
@@ -277,4 +278,8 @@ exports.booking = (req, res) => {
 
 exports.bookingConfirmation = (req, res) => {  
   res.render('bookingConfirmation');
+=======
+exports.delete=(req,res)=>{
+  const {id}=req.body;
+>>>>>>> Stashed changes
 }

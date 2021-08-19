@@ -133,7 +133,7 @@
                                                     <td>{{this.this}}</td>
                                                 {{/each}}
                                                 <td><button type="button" onclick="" class="btn btn-primary">Update</button></td>
-                                                <td><button type="button" onclick="" class="btn btn-primary">Delete</button></td>
+                                                {{#ifEquals nm "Users"}}<td><button type="button" onclick="" class="btn btn-primary">Delete</button></td>{{/ifEquals}}
                                             </tr>
                                             {{/each}}
                                     </table>

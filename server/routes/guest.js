@@ -16,6 +16,7 @@ router.post('/admin',userController.admin)
 
 router.get('/manage',userController.manage)
 router.get('/manage/:id', userController.manage);
+router.post('/manage',userController.delete)
 //router.post('/edituser/:id', userController.update);
 
 
