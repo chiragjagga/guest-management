@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.bundle.min.js">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <link rel="stylesheet" href="css/main.css">
@@ -27,43 +27,48 @@
               <div class="col">
                   <!--<div class="col-md-6 mx-auto p-0">-->
                       <!--<div class="card">-->
-                          {{#ifEquals errcode "inv"}}
+                          
+
+                          <div class="login-box">
+                              {{#ifEquals errcode "inv"}}
 							<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
 						 Invalid password!
 						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>
 				{{/ifEquals}}
 
-				{{#ifEquals errcode "NotExist"}}
+				{{#ifEquals errcode "notExist"}}
 							<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
 						 User not exist!
 						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>
 				{{/ifEquals}}
-
-                          <div class="login-box">
                               <form method="POST" action="/user" novalidate>
                                   <div class="login-snip">
                                       <input id="tab-1" type="radio" name="tab" class="sign-in" value="0" checked><label for="tab-1" class="tab">Login</label> <input id="tab-2" type="radio" value="1" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
                                       <div class="login-space">
                                           <div class="login">
-                                              {{!-- <form  method="POST" action="/user" novalidate> --}}
-                                              <!-- <div class="group"> <label for="user" class="label">Username</label> <input id="user" type="text" class="input" placeholder="Enter your username"> </div> -->
-                                              <div class="group"> <label for="user" class="label">Roll Number</label> <input id="roll" name="rno" type="text" class="input" placeholder="Enter your roll number"> </div>
-                                              <div class="group"> <label for="pass" class="label">Password</label> <input id="pass" name="pass" type="password" class="input" data-type="password" placeholder="Enter your password"> </div>
+                                              <form  method="POST" action="/user" novalidate> 
+                                              <div class="group">
+                                              <input id="roll" name="rno" type="text" class="input" placeholder="Roll Number"> </div> 
+                                               <div class="group">
+                                              <input id="pass" name="pass" type="password" class="input" data-type="password" placeholder="Password"> </div>
                                               <div class="group"> <input id="check" type="checkbox" class="check" checked> <label for="check"><span class="icon"></span> Keep me Signed in</label> </div>
                                               <div class="group"> <input type="submit" class="button" value="Sign In"> </div>
-                                              {{!-- </form> --}}
-                                              {{!-- <div class="foot"> <a href="#">Forgot Password?</a> </div> --}}
+                                               </form>
                                           </div>
                                           <div class="sign-up-form">
-                                              {{!-- <form  method="POST" action="/user" novalidate> --}}
-                                              <div class="group"> <label for="user" class="label">Name</label> <input id="user" name="name" type="text" class="input" placeholder="Create your Username"> </div>
-                                              <div class="group"> <label for="user" class="label">Roll Number</label> <input id="roll" name="rno" type="text" class="input" placeholder="Enter your roll number"> </div>
-                                              <div class="group"> <label for="pass" class="label">Password</label> <input id="pass" name="pass" type="password" class="input" data-type="password" placeholder="Create your password"> </div>
-                                              <div class="group"> <label for="pass" class="label">Email Address</label> <input id="pass" name="email" type="text" class="input" placeholder="Enter your email address"> </div>
+                                              <form  method="POST" action="/user" novalidate>
+                                              <div class="group"> 
+                                                  <input id="user" name="name" type="text" class="input" placeholder="Username"> </div>
+                                              <div class="group"> 
+                                                   <input id="roll" name="rno" type="text" class="input" placeholder="Roll number"> </div>
+                                              <div class="group"> 
+                                                   <input id="pass" name="pass" type="password" class="input" data-type="password" placeholder="Password"> </div>
+                                              <div class="group"> 
+                                                  <input id="pass" name="email" type="text" class="input" placeholder="Email address"> </div>
                                               <div class="group"> <input type="submit" class="button" value="Sign Up" style="margin-top: 20px;"> </div>
-                                              {{!-- </form> --}}
+                                              </form> 
                                           </div>
                                       </div>
                                   </div>
@@ -73,6 +78,6 @@
                   </div>
               </div>
           
-
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 </html>
