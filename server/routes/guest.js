@@ -19,5 +19,18 @@ router.get('/manage/:id', userController.manage);
 
 
 router.get('/rooms',userController.rooms)
+
+router.get('/about',userController.about)
+
+router.get('/contact',userController.contact)
   
+router.get('/contact',userController.contact)
+
+router.get('/adminUpdateForm',userController.adminUpdateForm)
+
+router.get('/booking',userController.booking)
+
+router.get('/bookingConfirmation',userController.bookingConfirmation)
+
+
 module.exports = router;

@@ -235,3 +235,23 @@ exports.manage= (req, res) => {
 exports.rooms = (req, res) => {  
     res.render('rooms');
 }
+
+exports.about = (req, res) => {  
+  res.render('about');
+}
+
+exports.contact = (req, res) => {  
+  res.render('contact');
+}
+
+exports.adminUpdateForm = (req, res) => {  
+  res.render('adminUpdateForm');
+}
+
+exports.booking = (req, res) => {  
+  res.render('booking');
+}
+
+exports.bookingConfirmation = (req, res) => {  
+  res.render('bookingConfirmation');
+}
