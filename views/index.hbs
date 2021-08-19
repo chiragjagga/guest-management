@@ -84,37 +84,36 @@
 				<div class="row">
           <div class="col-md-4 col-md-pull-7" style="margin: 30px 15px 30px 30px">
 						<div class="booking-form">
-							<form>
+							<form method="POST" action="/">
 								<div class="row">
 									<div class="col-sm-6">
 										<div class="form-group">
 											<span class="form-label">Check In</span>
-											<input class="form-control" type="date" required>
+											<input class="form-control" name ="cin" type="date" value="{{det.cin}}" required>
 										</div>
 									</div>
 									<div class="col-sm-6">
 										<div class="form-group">
 											<span class="form-label">Check out</span>
-											<input class="form-control" type="date" required>
+											<input class="form-control" type="date" name ="cout" value="{{det.cout}}" required>
 										</div>
 									</div>
 								</div>
 								<div class="row">
-									<div class="col-sm-6">
+									<div class="col-sm-12">
 										<div class="form-group">
 											<span class="form-label">Rooms</span>
-											<select class="form-control">
-												<option>No. of rooms</option>
+											<select class="form-control" name="rooms" required>
+                        <option value="" disabled selected>No. Of Rooms..</option>
 												<option>1</option>
 												<option>2</option>
 												<option>3</option>
 												<option>4</option>
-												
 											</select>
 											<span class="select-arrow"></span>
 										</div>
 									</div>
-									<div class="col-sm-6">
+									{{!-- <div class="col-sm-6">
 										<div class="form-group">
 											<span class="form-label">Guest count</span>
 											<select class="form-control">
@@ -127,7 +126,7 @@
 											</select>
 											<span class="select-arrow"></span>
 										</div>
-									</div>
+									</div> --}}
 								</div>
 								<div class="form-btn">
 									<center><button class="submit-btn">Check availability</button></center>
@@ -139,12 +138,36 @@
 						<div class="booking-cta" style="margin: 30px 20px 30px 30px">
 							<h1>Make your reservation</h1>
 							<table class="table">
-								<thead>
+								
+								{{#if avail}}
+                <h5>with checkIn {{det.cin}} & checkout {{det.cout}} for {{det.rooms}} rooms below:</h5>
+                {{!-- //apni table --}}
+                <thead>
+									<th>Hostel</th>
+									<th>Max Guest</th>
+									<th>Amount/Room</th>
+                  <th>Action</th>
+								</thead>
+                {{#each avail}}
+                 <tr>
+									<td><strong>{{this.Name}}</strong></td>
+									<td><strong>{{this.NoOfGuests}}/Room</strong></td>
+									<td><strong>{{this.Price}}/day</strong></td>		
+                  <td>
+                    	<div class="form-btn">
+									<button class="submit-btn">Book Now</button>
+								</div>
+                  </td>
+								</tr>
+                {{/each}}
+                {{else}}
+                {{!-- //unki table --}}
+                <thead>
 									<th>Hostels</th>
 									<th>Room</th>
 									<th>Amount</th>
 								</thead>
-								<tr>
+                   <tr>
 									<td><strong>International Hostel</strong></td>
 									<td><strong>3 bedded</strong></td>
 									<td><strong>450/day</strong></td>			
@@ -164,7 +187,8 @@
 									<td><strong>2 bedded</strong></td>
 									<td><strong>250/day</strong></td>			
 								</tr>
-							</table>
+                {{/if}}
+                </table>
 						</div>
 					</div>
 				</div>

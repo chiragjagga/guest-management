@@ -1,0 +1,16 @@
+ $sql="SELECT * FROM tbl_room WHERE roomid not in (SELECT b.roomid FROM tbl_booking b 
+ where(b.checkout BETWEEN '$checkin' and '$checkout') and 
+ (b.checkin BETWEEN '$checkin' and '$checkout'))";
+
+
+(SELECT * FROM bookings b 
+ where(b.CheckOut BETWEEN '2021-08-21' and '2021-08-23') OR 
+ (b.CheckIn BETWEEN '2021-08-21' and '2021-08-23'))
+
+
+
+SELECT * FROM room rm WHERE rm.Room_id NOT IN (SELECT DISTINCT Room_id FROM booking bk WHERE (bk.arrive_date BETWEEN '$from_date' AND '$to_date') OR (bk.departure_date BETWEEN '$from_date' AND '$to_date') OR (bk.arrive_date<'$from_date' AND bk.departure_date>'$to_date'))
+
+
+
+SELECT * FROM rooms rm WHERE rm.ID NOT IN(SELECT Room_Id FROM bookings bk WHERE (bk.CheckIn BETWEEN '2021-08-21' and '2021-08-23') OR (bk.CheckOut BETWEEN '2021-08-21' and '2021-08-23') OR (bk.CheckIn<'2021-08-21' AND bk.CheckOut>'2021-08-23'))

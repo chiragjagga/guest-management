@@ -24,13 +24,13 @@ exports.view = (req, res) => {
       session=req.session;
       const value=req.query.referer;
       let removedUser=session.userid;
-      console.log(req.query,req.params);
-    //  if(!session.userid) res.render('index', { rows,removedUser,value});
-    //  else { 
-            // let uname=session.
-       res.render('index', { rows ,removedUser,value})}
-
-    //}
+      console.log(session.avail);
+      let avail=session.avail;
+      let det=session.detail;
+      console.log(det);
+      if(avail!=undefined) res.render('index', {avail,rows ,removedUser,value, det});   
+      else res.render('index', {rows ,removedUser,value});
+    }     
      else {
       console.log(err);
     }
@@ -38,6 +38,29 @@ exports.view = (req, res) => {
   });
 }
 
+exports.inventory = (req, res) => { 
+  const {cin,cout,rooms}=req.body;
+  console.log(req.body);
+  connection.query('SELECT * from rooms,(SELECT Room_Id,SUM(RoomCount) as sum FROM bookings bk WHERE (bk.CheckIn BETWEEN ? and ?) OR (bk.CheckOut BETWEEN ? and ?) OR (bk.CheckIn<? AND bk.CheckOut>?) GROUP BY Room_Id )AS totals WHERE rooms.ID = totals.Room_Id and ?<=10-sum GROUP BY Room_Id', [cin,cout,cin,cout,cin,cout,rooms], (err, rows) =>{
+    console.log("query part");
+    if(!err){
+      console.log("query chali");
+      // let arr="";
+      // for(let i=0;i<rows.length;i++){
+      //   if(i==rows.length-1) arr+="'"+rows[i].Room_Id+"'";
+      //   else arr+="'"+rows[i].Room_Id+"',";
+      // } 
+      session=req.session;
+      session.avail=rows;
+      session.detail=req.body;
+      res.redirect('/');
+    }
+    else{
+      console.log("error");
+      console.log(err);
+    }
+  });
+};
 //user login/signup
 
  exports.user = (req, res) => {
