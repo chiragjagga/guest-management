@@ -29,9 +29,9 @@ body{
 /* USER.HBS FILE
 USER LOGIN SIGNUP */
 
-/* body {
+body {
     margin: 0;
-}  */
+} 
  
 .login-box {
     width: 100%;
