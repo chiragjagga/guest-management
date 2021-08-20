@@ -19,14 +19,15 @@
 </head>
 
 <body>
+    
     <div class="wrapper">
         <div class="sidebar" data-color="blue" data-image=" assets/img/sidebar-5.jpg">
             <div class="sidebar-wrapper">
                 <ul class="nav">
                     <li>
                         <a class="nav-link" href="/manage?type=dashboard">
-                            {{!-- <i class="nc-icon nc-circle-09"></i> --}}
-                            <p>Dashboard</p>
+                            <i class="nc-icon nc-button-power"></i>
+                            <p>Dashboard</p> <hr>
                         </a>
                     </li>
                     <li>
@@ -91,18 +92,41 @@
             </nav>
             <div class="content">
                 <div class="container-fluid">
+                    {{#if dnm}}
+                    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+						 "User {{dnm}} has been removed successfully!"
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div>
+                        <script> alert("User "+{{dnm}}+" has been removed successfully!"); </script>
+                    {{/if}}
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card card-plain table-plain-bg">
                                 <div class="card-header ">
+                                    {{#ifEquals nm "Dashboard"}}
+                                    <h1>WELCOME TO NITC GUEST MANAGEMENT</h1><br>
+                                        <img src="/images/logo.jpg">
+                                    {{/ifEquals}}
+
                                     {{#ifNotEquals nm "Dashboard"}}
-                                         <h4 class="card-title">{{nm}} Table</h4>
+                                        {{#ifNotEquals nm "Managers"}} 
+                                        <h4 class="card-title">{{nm}} Table</h4>
                                         <p class="card-category">Details of the {{nm}} </p>
+                                        {{/ifNotEquals}}
                                     {{/ifNotEquals}}
 
-                                     
+                                    {{#ifEquals nm "Managers"}}
+                                    <form method="POST" action="/adminUpdateForm">
+                                         <button class="btn btn-primary btn-lg float-right" name="addAdmin" type="submit">Add User</button>
+                                         </form>
+                                         <h4 class="card-title">{{nm}} Table</h4>
+                                        <p class="card-category">Details of the {{nm}} </p>
+
+                                    {{/ifEquals}}
+                                    
                                 </div>
                                 <div class="card-body table-full-width table-responsive">
+                                
                                     <table class="table table-hover">
                                         <thead>
                                             {{#each coulmnArray}}
@@ -118,31 +142,17 @@
                                                 {{#each this}}
                                                     <td>{{this.this}}</td>
                                                 {{/each}}
-                                                <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button></td>
-                                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                              <div class="modal-header">
-                                                                    <h5 class="modal-title" id="exampleModalLabel">Update</h5>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                </div>
-                                                               <div class="modal-body">
-                                                                   <label for="query">Label</label>
-                                                                   <input type="text" id="query" placeholder="Enter:" class="rounded" style="margin-left:20px">
-                                                               </div>
-                                                               <br>
-                                                                <div class="modal-footer">
-                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                    <button type="button" class="btn btn-primary">Save changes</button>
-                                                                </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            <td><button type="button" onclick="" class="btn btn-primary">Delete</button></td>
+                                                <form method="POST" action="/adminUpdateForm">
+                                                <input name="tt" type="hidden" value="{{../nm}}">
+                                                {{!-- <td><button type="submit" name="upd" value={{this.ID}} class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button></td> --}}
+                                                <td><button type="submit" name="upd" value={{this.ID}} class="btn btn-primary">Update</button></td>
+                                                </form>
+                                            {{#ifEquals ../nm "Users"}}<td><form method="POST" action="/delete"><input name="dnm" type="hidden" value="{{this.RollNo}}"><button type="submit" name="uid" value={{this.ID}} onclick="" class="btn btn-primary">Delete</button></form></td>{{/ifEquals}}
                                             </tr>
                                             {{/each}}
                                     </table>
                                 </div>
+                                     
                                 <!-- <div class="form-popup" id="myForm">
                                     <form action="/action_page.php" class="form-container">
                                         <h1>Edit Details</h1>

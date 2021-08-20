@@ -1,6 +1,7 @@
 const mysql = require('mysql');
 const sessions = require('express-session');
 const e = require('express');
+const { json } = require('body-parser');
 
 var session;
 
@@ -9,7 +10,8 @@ let connection = mysql.createConnection({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
   password: process.env.DB_PASS,
-  database: process.env.DB_NAME
+  database: process.env.DB_NAME,
+  dateStrings:true
 });
 
 // View Users
@@ -69,12 +71,12 @@ exports.inventory = (req, res) => {
   // User the connection
   if(tab==1){
     // connection.query('INSERT INTO users (RollNO,Password,Name,Email) VALUES (?,?,?,?)',[rno,pass,name,email] ,(err, rows) => {
-      connection.query('INSERT INTO users SET RollNO = ?, Password = ?, Name = ?, Email = ?', [rno[1],pass[1],name,email], (err, rows) =>{
+      connection.query('INSERT INTO users SET RollNO = ?, Password = ?, Name = ?, Email = ?', [rno,pass,name,email], (err, rows) =>{
       // When done with the connection, release it
 
       if (!err) {
         session=req.session;
-        session.userid=rno[1];
+        session.userid=rno;
         let removedUser
         session.type='user';
         res.redirect('/?referer=signup');
@@ -84,16 +86,16 @@ exports.inventory = (req, res) => {
       console.log('The data from user table: \n', rows);
     });
   }else if(tab==0){
-    connection.query('SELECT RollNo, Password from users where RollNO=?',[rno[0]],(err,rows)=>{
+    connection.query('SELECT RollNo, Password from users where RollNO=?',[rno],(err,rows)=>{
       //console.log(rows[0].RollNo);
       if(rows.length>0)
       {
         const myusername=rows[0].RollNo;
         const mypassword=rows[0].Password;
-      //console.log(myusername,mypassword)
-          if(req.body.rno[0] == myusername && req.body.pass[0] == mypassword){
+      console.log(myusername,mypassword)
+          if(req.body.rno == myusername && req.body.pass == mypassword){
             session=req.session;
-            session.userid=req.body.rno[0];
+            session.userid=req.body.rno;
             session.type='user';
             console.log(req.session);
             res.redirect('/?referer=login');
@@ -102,6 +104,8 @@ exports.inventory = (req, res) => {
           res.redirect('/user?errorcode=inv');
       }
       }else{
+        console.log(req.body);
+        console.log(tab);
         console.log("kuch nhi aayega");
         res.redirect('/user?errorcode=notExist');
       }
@@ -120,7 +124,7 @@ exports.logout = (req, res) => {
   req.session.destroy();
 
   if(x=='admin')
-    res.redirect('/admin');
+    res.redirect('/admin?errorcode=logout');
   else {
     res.redirect("/?referer=logout");
   }
@@ -156,6 +160,7 @@ exports.adminview = (req, res) => {
       }
     }else{
       const errcode=req.query.errorcode;
+      
         res.render('admin',{errcode});
   }
 }
@@ -229,9 +234,10 @@ exports.manage= (req, res) => {
 
   }else if(req.query.type=="bookingsManage"){
     nm="Bookings";
-    coulmnArray = ['ID','USer_ID','CheckIn','CheckOut','MobileNumber','Room_Id','GuestNameList','GuestAgeList','Amount','Status'];
-    connection.query('SELECT * from bookings' ,(err,rows)=>{
-    //console.log(rows);
+    coulmnArray = ['Booking ID','Roll No','CheckIn','CheckOut','Mobile Number',
+              'Room_Id','Room Count','Guest Name','Guest Age','Amount','Status'];
+    connection.query('SELECT bookings.ID,RollNo,CheckIn,CheckOut,MobileNumber,Room_Id,RoomCount,GuestName,GuestAge,Amount,bookings.Status from bookings,users where bookings.U_ID=users.ID' ,(err,rows)=>{
+    console.log(rows[0],rows[1]);
     res.render('manage', { rows ,coulmnArray,nm})
     console.log(rows,coulmnArray);
   });
@@ -245,7 +251,17 @@ exports.manage= (req, res) => {
     console.log(rows,coulmnArray);
   });
   }
-
+  else if(req.query.type=="userdel"){
+    nm="Users";
+    let dnm=session.deluser;
+    
+    coulmnArray = ['ID','Name','RollNo','Email','Password','status'];
+    connection.query('SELECT * from users' ,(err,rows)=>{
+    //console.log(rows);
+    res.render('manage', { rows ,coulmnArray,nm,dnm})
+    console.log(rows,coulmnArray,nm,dnm);
+  });
+  }
   else if(req.query.type=="dashboard" ||res.query==undefined){
     nm="Dashboard";
     res.render('manage', {nm})
@@ -259,7 +275,6 @@ exports.rooms = (req, res) => {
     res.render('rooms');
 }
 
-<<<<<<< Updated upstream
 exports.about = (req, res) => {  
   res.render('about');
 }
@@ -269,7 +284,41 @@ exports.contact = (req, res) => {
 }
 
 exports.adminUpdateForm = (req, res) => {  
-  res.render('adminUpdateForm');
+  
+ //res.render('adminUpdateForm',{});
+}
+
+exports.update = (req, res) => { 
+  if(session.type=="admin")
+  { 
+    console.log("test"+req.body.tt);
+    let tname=req.body.tt;
+    if(tname=="Users"){ 
+       tname="users";
+       coulmnArray = ['ID','Name','RollNo','Email','Password','status'];
+    }
+    else if(tname=="Managers"){
+        tname="admin";
+        coulmnArray = ['ID','Name','Email','Password','Del_id'];
+  }
+    else if(tname=="Bookings") {
+      coulmnArray = ['Booking ID','Roll No','CheckIn','CheckOut','Mobile Number',
+      'Room_Id','Room Count','Guest Name','Guest Age','Amount','Status'];
+       tname="bookings";
+      }
+    else if(tname=="Rooms"){ 
+       tname="rooms";
+       coulmnArray = ['ID','Name','Price','No of Rooms','No Of Guests'];
+  }
+  console.log(req.query.type,req.body.upd);
+   connection.query('SELECT * from '+tname +' where ID=?',[req.body.upd] ,(err,rows)=>{
+      //const upchk=1;
+      console.log('SELECT * from '+tname +' where ID=?',[req.body.upd]);
+      tname=req.body.tt;
+      res.render('adminUpdateForm', {rows})
+      console.log(rows,tname);
+    });
+  }
 }
 
 exports.booking = (req, res) => {  
@@ -278,8 +327,16 @@ exports.booking = (req, res) => {
 
 exports.bookingConfirmation = (req, res) => {  
   res.render('bookingConfirmation');
-=======
+}
+
 exports.delete=(req,res)=>{
-  const {id}=req.body;
->>>>>>> Stashed changes
+     let id=req.body.uid;
+     session=req.session;
+     session.deluser=req.body.dnm;
+     connection.query('DELETE from users where ID=?',[id],(err,rows)=>{
+      if(!err) res.redirect('/manage?type=userdel');
+      else console.log(err);
+      console.log(rows,coulmnArray);
+    });
+
 }

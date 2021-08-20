@@ -16,19 +16,18 @@ router.post('/admin',userController.admin)
 
 router.get('/manage',userController.manage)
 router.get('/manage/:id', userController.manage);
-router.post('/manage',userController.delete)
-//router.post('/edituser/:id', userController.update);
 
+//router.post('/adminUpdateForm',userController.updateView)
+router.post('/adminUpdateForm',userController.update)
+router.get('/adminUpdateForm',userController.adminUpdateForm)
+
+router.post('/delete', userController.delete);
 
 router.get('/rooms',userController.rooms)
 
 router.get('/about',userController.about)
 
 router.get('/contact',userController.contact)
-  
-router.get('/contact',userController.contact)
-
-router.get('/adminUpdateForm',userController.adminUpdateForm)
 
 router.get('/booking',userController.booking)
 
