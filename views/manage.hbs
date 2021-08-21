@@ -16,6 +16,13 @@
     <link href=" assets/css/light-bootstrap-dashboard.css?v=2.0.0 " rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href=" assets/css/demo.css" rel="stylesheet" />
+    <script>
+            function makeActive(name) {
+               var element = document.getElementById("text");
+
+               element.classList.add("active");
+            }
+        </script>
 </head>
 
 <body>
@@ -24,37 +31,37 @@
         <div class="sidebar" data-color="blue" data-image=" assets/img/sidebar-5.jpg">
             <div class="sidebar-wrapper">
                 <ul class="nav">
-                    <li>
-                        <a class="nav-link" href="/manage?type=dashboard">
+                    <li id="dash">
+                        <a  class="nav-link " href="/manage?type=dashboard">
                             <i class="nc-icon nc-button-power"></i>
                             <p>Dashboard</p> <hr>
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="/manage?type=managers">
+                    <li id="managers">
+                        <a  class="nav-link" href="/manage?type=managers">
                             <i class="nc-icon nc-circle-09"></i>
                             <p>Manager</p>
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="/manage?type=userManage">
+                    <li id="user">
+                        <a  class="nav-link" href="/manage?type=userManage">
                             <i class="nc-icon nc-circle-09"></i>
                             <p>Users</p>
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="/manage?type=bookingsManage">
+                    <li id="booking">
+                        <a  class="nav-link" href="/manage?type=bookingsManage">
                             <i class="nc-icon nc-circle-09"></i>
                             <p>Bookings</p>
                         </a>
                     </li>
-                    <li>
-                        <a class="nav-link" href="/manage?type=rooms">
+                    <li id="rooms">
+                        <a  class="nav-link" href="/manage?type=rooms">
                             <i class="nc-icon nc-circle-09"></i>
                             <p>Rooms</p>
                         </a>
                     </li>
-                    <li>
+                    <li id="feedback">
                         <a class="nav-link" href="/manage?type=feedback">
                             <i class="nc-icon nc-chat-round"></i>
                             <p>Feedback</p>
@@ -116,7 +123,7 @@
                             <div class="card card-plain table-plain-bg">
                                 <div class="card-header ">
                                     {{#ifEquals nm "Dashboard"}}
-                                    <h1>WELCOME TO NITC GUEST MANAGEMENT</h1><br>
+                                    <h2>WELCOME TO NITC GUEST MANAGEMENT</h2><br>
                                         {{!-- <img src="/images/logo.jpg"> --}}
                                     {{/ifEquals}}
 
@@ -129,7 +136,7 @@
 
                                     {{#ifEquals nm "Managers"}}
                                     <form method="POST" action="/adminUpdateForm">
-                                         <button class="btn btn-primary btn-lg float-right" name="addAdmin" type="submit">Add User</button>
+                                         <button class="btn btn-primary btn-lg float-right" name="tt" value="Add" type="submit">Add User</button>
                                          </form>
                                          <h4 class="card-title">{{nm}} Table</h4>
                                         <p class="card-category">Details of the {{nm}} </p>

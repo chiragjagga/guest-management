@@ -76,13 +76,17 @@ exports.inventory = (req, res) => {
   // User the connection
   if(tab==1){
     // connection.query('INSERT INTO users (RollNO,Password,Name,Email) VALUES (?,?,?,?)',[rno,pass,name,email] ,(err, rows) => {
-      connection.query('INSERT INTO users SET RollNO = ?, Password = ?, Name = ?, Email = ?', [rno,pass,name,email], (err, rows) =>{
+      connection.query('SELECT ID from users where RollNO=?',[rno],(err,rows)=>{
+      if(!err){
+        if(rows.length==0){
+        connection.query('INSERT INTO users SET RollNO = ?, Password = ?, Name = ?, Email = ?', [rno,pass,name,email], (err, rows) =>{
       // When done with the connection, release it
 
       if (!err) {
         session=req.session;
         session.userid=rno;
-        session.usernm=rows[0].ID;
+        //console.log(rows);
+        session.usernm=rows.insertId;
         let removedUser
         session.type='user';
         res.redirect('/?referer=signup');
@@ -90,7 +94,11 @@ exports.inventory = (req, res) => {
         console.log(err);
       }
       console.log('The data from user table: \n', rows);
-    });
+    });}
+    else res.redirect('/user?errorcode=exists')
+  }
+  else console.log(err);
+  });
   }else if(tab==0){
     connection.query('SELECT ID,RollNo, Password from users where RollNO=? and Status="Active"',[rno],(err,rows)=>{
       //console.log(rows[0].RollNo);
@@ -333,8 +341,8 @@ exports.contactsub = (req, res) => {
 }
 
 exports.updatedata = (req, res) => {  
-      const{uid,uname,urno,uemail,upass,ustatus,mid,memail,mname,mpass,mstatus,bid,bname,bcin,bcout,bmno,brid,brc,brgname,brgage,bamt,bstatus,rid,rname,rprice,rnmr,rnmg,rdesc,Users,Managers,Rooms,Bookings}=req.body;
-      console.log(uid,uname,urno,uemail,upass,ustatus,mid,memail,mname,mpass,mstatus,bid,bname,bcin,bcout,bmno,brid,brc,brgname,brgage,bamt,bstatus,rid,rname,rprice,rnmr,rnmg,rdesc,Users,Managers,Rooms,Bookings)
+      const{uid,uname,urno,uemail,upass,ustatus,mid,memail,mname,mpass,mstatus,bid,bname,bcin,bcout,bmno,brid,brc,brgname,brgage,bamt,bstatus,rid,rname,rprice,rnmr,rnmg,rdesc,Users,Managers,Rooms,Bookings,Add,aemail,aname,apass}=req.body;
+      console.log(uid,uname,urno,uemail,upass,ustatus,mid,memail,mname,mpass,mstatus,bid,bname,bcin,bcout,bmno,brid,brc,brgname,brgage,bamt,bstatus,rid,rname,rprice,rnmr,rnmg,rdesc,Users,Managers,Rooms,Bookings,Add,aemail,aname,apass)
       if(Users!=undefined){
         connection.query('UPDATE users SET Name=?, RollNo = ?, Email = ?, Password = ?, Status = ? where ID=?', [uname,urno,uemail,upass,ustatus,uid], (err, rows) => {
             if(!err) res.redirect('/manage?type=userManage&sub=User');
@@ -356,6 +364,12 @@ exports.updatedata = (req, res) => {
         else if(Rooms!=undefined){
           connection.query('UPDATE rooms SET Name=?, Price=?, NoOfRooms=?, NoOfGuests=?,description=? where ID=?', [rname,rprice,rnmr,rnmg,rdesc,rid], (err, rows) => {
             if(!err) res.redirect('/manage?type=rooms&sub=Room');
+            else console.log(err);
+        });
+        }
+        else if(Add!=undefined){
+          connection.query('INSERT INTO admin SET Email=?, name= ?, password = ? ', [aemail,aname,apass], (err, rows) => {
+            if(!err) res.redirect('/manage?type=managers&sub=Manager');
             else console.log(err);
         });
         }
@@ -384,14 +398,18 @@ exports.update = (req, res) => {
        tname="rooms";
        coulmnArray = ['ID','Name','Price','No of Rooms','No Of Guests'];
   }
+  
   console.log(req.query.type,req.body.upd);
-   connection.query('SELECT * from '+tname +' where ID=?',[req.body.upd] ,(err,rows)=>{
+   if(tname!="Add"){
+    connection.query('SELECT * from '+tname +' where ID=?',[req.body.upd] ,(err,rows)=>{
       //const upchk=1;
-      console.log('SELECT * from '+tname +' where ID=?',[req.body.upd]);
+      //console.log('SELECT * from '+tname +' where ID=?',[req.body.upd]);
       tname=req.body.tt;
       res.render('adminUpdateForm', {rows,tname})
       console.log(rows,tname);
     });
+    }
+    else {tname="Add"; res.render('adminUpdateForm', {tname})}
   }
 }
 
