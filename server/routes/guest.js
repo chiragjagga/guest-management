@@ -19,7 +19,8 @@ router.get('/manage/:id', userController.manage);
 
 //router.post('/adminUpdateForm',userController.updateView)
 router.post('/adminUpdateForm',userController.update)
-router.get('/adminUpdateForm',userController.adminUpdateForm)
+
+router.post('/update',userController.updatedata);
 
 router.post('/delete', userController.delete);
 
@@ -28,10 +29,12 @@ router.get('/rooms',userController.rooms)
 router.get('/about',userController.about)
 
 router.get('/contact',userController.contact)
+router.post('/contact',userController.contactsub)
 
 router.get('/booking',userController.booking)
+router.post('/booking',userController.bookingpost)
 
-router.get('/bookingConfirmation',userController.bookingConfirmation)
+router.post('/bookingConfirmation',userController.bookingConfirmation)
 
 
 module.exports = router;

@@ -54,7 +54,12 @@
                             <p>Rooms</p>
                         </a>
                     </li>
-
+                    <li>
+                        <a class="nav-link" href="/manage?type=feedback">
+                            <i class="nc-icon nc-chat-round"></i>
+                            <p>Feedback</p>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -99,13 +104,20 @@
 					</div>
                         <script> alert("User "+{{dnm}}+" has been removed successfully!"); </script>
                     {{/if}}
+
+                    {{#if sub}}
+                    <div class="alert alert-primary alert-dismissible fade show text-center" role="alert">
+						 {{sub}} data has been updated successfully!
+						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+					</div
+                    {{/if}}
                     <div class="row">
                         <div class="col-md-12">
                             <div class="card card-plain table-plain-bg">
                                 <div class="card-header ">
                                     {{#ifEquals nm "Dashboard"}}
                                     <h1>WELCOME TO NITC GUEST MANAGEMENT</h1><br>
-                                        <img src="/images/logo.jpg">
+                                        {{!-- <img src="/images/logo.jpg"> --}}
                                     {{/ifEquals}}
 
                                     {{#ifNotEquals nm "Dashboard"}}
@@ -144,8 +156,10 @@
                                                 {{/each}}
                                                 <form method="POST" action="/adminUpdateForm">
                                                 <input name="tt" type="hidden" value="{{../nm}}">
+                                                {{#ifNotEquals ../nm "Feedback"}}      
                                                 {{!-- <td><button type="submit" name="upd" value={{this.ID}} class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Update</button></td> --}}
                                                 <td><button type="submit" name="upd" value={{this.ID}} class="btn btn-primary">Update</button></td>
+                                                {{/ifNotEquals}}
                                                 </form>
                                             {{#ifEquals ../nm "Users"}}<td><form method="POST" action="/delete"><input name="dnm" type="hidden" value="{{this.RollNo}}"><button type="submit" name="uid" value={{this.ID}} onclick="" class="btn btn-primary">Delete</button></form></td>{{/ifEquals}}
                                             </tr>

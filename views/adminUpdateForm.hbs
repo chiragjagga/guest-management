@@ -15,6 +15,36 @@
     <title>ADMIN UPDATE FORM</title>
 </head>
 <body>
+    <nav class="navbar navbar-expand-lg " color-on-scroll="500">
+                <div class="container-fluid">
+                    <a class="navbar-brand" href="#pablo"> National Institute of Technology, Calicut </a>
+                    <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                        <span class="navbar-toggler-bar burger-lines"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="navigation">
+                        <ul class="nav navbar-nav mr-auto">
+                            <li class="nav-item">
+                                <a href="#" class="nav-link" data-toggle="dropdown">
+                                    <span class="d-lg-none">Dashboard</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="navbar-nav ml-auto">
+                            
+                            <li class="nav-item">
+                                {{!-- <a class="nav-link" href="#pablo">
+                                    <span class="no-icon" href="/logout" >Log out</span>
+                                </a> --}}
+                               
+                            {{!-- <button class="btn btn-primary" type="button"><a href="/logout" style="width:auto;" aria-current="page"> Logout</a></button> --}}
+                      
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+    </nav>
     
     <div class="card card-plain table-plain-bg">
          <div class="card-header ">
@@ -23,180 +53,219 @@
             </div>
     </div>
 
-    {{!-- {{#ifEquals tname "Users"}} --}}
-    {{!-- 1{{this}}<br>
-    2{{this.this}}<br>
-    3{{rows.ID}}<br>
-    {{!-- 4{{rows[0]}}<br> --}}
-    5{{./ID}}<br> 
-    {{#if this.RollNo}}
-
-    {{!-- coulmnArray = ['ID','Name','RollNo','Email','Password','status']; --}}
-        <form>
+    
+    {{#ifEquals tname "Users"}}
+      {{#each rows}}
+     {{!-- coulmnArray = ['ID','Name','RollNo','Email','Password','status']; --}}
+       <form method="POST" action="/update">
             <div class="row">
                 <div class="mb-3 col-3">
                     <label for="disabledTextInput" class="form-label">ID</label>
-                    <input type="text" id="disabledTextInput" class="form-control" value="{{ID}}" disabled>
+                    <input  type="text" id="disabledTextInput" class="form-control" value="{{this.ID}}" disabled>
+                    <input type="hidden" name="uid" value="{{this.ID}}">
                 </div>
                 <div class="mb-3 col-3">
                     <label for="disabledTextInput" class="form-label">NAME</label>
-                    <input type="text" id="disabledTextInput" class="form-control" value="{{Name}}">
+                    <input name="uname" type="text" id="disabledTextInput" class="form-control" value="{{this.Name}}">
                 </div>
             </div>
             <div class="row">
                 <div class="mb-3 col-3">
                     <label for="disabledTextInput" class="form-label">RollNo</label>
-                    <input type="text" id="disabledTextInput" class="form-control" value="{{RollNo}}">
+                    <input name="urno" type="text" id="disabledTextInput" class="form-control" value="{{this.RollNo}}">
                 </div>
                 <div class="mb-3 col-3">
                     <label for="exampleInputEmail1" class="form-label">Email </label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{Email}}">
+                    <input name="uemail" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{this.Email}}">
                 </div>
             </div>
             <div class="row">
                 <div class="mb-3 col-3">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" value="{{Password}}">
+                    <input name="upass" type="password" class="form-control" id="exampleInputPassword1" value="{{this.Password}}">
                 </div>
                 <div class="mb-3 col-3">
                     <label for="disabledTextInput" class="form-label">Status</label>
-                    <input type="text" id="disabledTextInput" class="form-control" value="{{Status}}">
+                    <input name="ustatus" type="text" id="disabledTextInput" class="form-control" value="{{this.Status}}">
                 </div>
             </div>
             <div class="row">
-                <div class="col-5"><button type="submit" class="btn btn-primary">UPDATE</button></div>
+                <div class="col-5"><button type="submit" name={{../tname}} value="{{../tname}}" class="btn btn-primary">UPDATE {{tname}}</button></div>
             </div>
         </form>
-        {{/if}}
-    {{!-- {{/ifEquals}} --}}
-
+    {{/each}}
+    {{/ifEquals}}
+    
     {{#ifEquals tname "Managers"}}
+    {{#each rows}}
     {{!-- coulmnArray = ['ID','Name','Email','Password','Del_id']; --}}
-        <form>
+        <form method="POST" action="/update">
             <div class="mb-3 col-6">
                 <label for="disabledTextInput" class="form-label">ID</label>
-                <input type="text" id="disabledTextInput" class="form-control" value={{rows.ID}} disabled>
+                <input  type="text" id="disabledTextInput" class="form-control" value={{this.ID}} disabled>
+                <input type="hidden" name="mid" value="{{this.ID}}">
             </div>
              <div class="mb-3 col-6">
                 <label for="disabledTextInput" class="form-label">NAME</label>
-                <input type="text" id="disabledTextInput" class="form-control" value={{rows.name}}>
+                <input name="mname" type="text" id="disabledTextInput" class="form-control" value={{this.name}}>
             </div>
              
             <div class="mb-3 col-6">
                 <label for="exampleInputEmail1" class="form-label">Email </label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={{rows.email}}>
+                <input name="memail" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={{this.email}}>
             </div>
             <div class="mb-3 col-6">
                 <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" value={{rows.password}}>
+                <input name="mpass" type="password" class="form-control" id="exampleInputPassword1" value={{this.password}}>
             </div>
              <div class="mb-3 col-6">
                 <label for="disabledTextInput" class="form-label">Status</label>
-                <input type="text" id="disabledTextInput" class="form-control" value={{this.del_id}}>
+                <input name="mstatus" type="text" id="disabledTextInput" class="form-control" value={{this.del_id}}>
             </div>
             <div class="mb-3 col-3">
-            <button type="submit" class="btn btn-primary">UPDATE</button>
+            <button name={{../tname}}  type="submit" value="{{../tname}}"  class="btn btn-primary">UPDATE {{tname}}</button>
             </div>
         </form>
+        {{/each}}
     {{/ifEquals}}
 
     {{#ifEquals tname "Bookings"}}
+        {{#each rows}}
     {{!-- coulmnArray = ['Booking ID','Roll No','CheckIn','CheckOut','Mobile Number',
       'Room_Id','Room Count','Guest Name','Guest Age','Amount','Status']; --}}
-        <form>
+        <form method="POST" action="/update">
             <div class="row">
                 <div class="mb-3 col-6">
                     <label for="disabledTextInput" class="form-label">ID</label>
-                    <input type="text" id="disabledTextInput" class="form-control" value='1' disabled>
+                    <input  type="text" id="disabledTextInput" class="form-control" value={{this.ID}} disabled>
+                    <input type="hidden" name="bid" value="{{this.ID}}">
                 </div>
                 <div class="mb-3 col-6">
-                    <label for="disabledTextInput" class="form-label">RollNo</label>
-                    <input type="text" id="disabledTextInput" class="form-control" value='1' disabled>
+                    <label for="disabledTextInput" class="form-label">User ID</label>
+                    <input  type="text" id="disabledTextInput" class="form-control" value={{this.U_ID}} disabled>
+                    <input type="hidden" name="bname" value="{{this.U_ID}}">
                 </div>
             </div>
             <div class="row">
                 <div class="mb-3 col-4">
                     <label for="exampleInputEmail1" class="form-label">Check-in </label>
-                    <input type="datetime" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value='1' disabled>
+                    <input name="bcin" type="datetime" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={{this.CheckIn}}>
                 </div>
                 <div class="mb-3 col-4">
                     <label for="exampleInputEmail1" class="form-label">Check-out </label>
-                    <input type="datetime" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value='1' disabled>
+                    <input name="bcout" type="datetime" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={{this.CheckOut}} >
                 </div>
                 <div class="mb-3 col-4">
                     <label for="exampleInputEmail1" class="form-label">Mobile No</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value='1' disabled>
+                    <input  name="bmno" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={{this.MobileNumber}} >
+                  
                 </div>
             </div>
 
             <div class="row">
                 <div class="mb-3 col-3">
                     <label for="exampleInputEmail1" class="form-label">Room-Id </label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value='1' >
+                    <input name="brid" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={{this.Room_Id}} >
                 </div>
                 <div class="mb-3 col-3">
                     <label for="exampleInputEmail1" class="form-label">Room Count </label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value='1' >
+                    <input name="brc" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={{this.RoomCount}} >
                 </div>
                 <div class="mb-3 col-3">
                     <label for="exampleInputEmail1" class="form-label">Guest Name</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value='1' disabled>
+                    <input  type="text"  name="brgname" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={{this.GuestName}} >
+                    
                 </div>
                  <div class="mb-3 col-3">
                     <label for="exampleInputEmail1" class="form-label">Guest Age</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value='1' disabled>
+                    <input type="text" name="brgage" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={{this.GuestAge}} >
+                    
                 </div>
             </div>
             <div class="row">
                 <div class="mb-3 col-3">
                     <label for="exampleInputEmail1" class="form-label">Amount</label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value='1' >
+                    <input name="bamt" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={{this.Amount}}>
                 </div>
                 <div class="mb-3 col-3">
                     <label for="exampleInputEmail1" class="form-label">Status </label>
-                    <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value='1' >
+                    <input name="bstatus" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={{this.Status}}>
                 </div>
             </div>
             <div class="mb-3 col-3">
-            <button type="submit" class="btn btn-primary">UPDATE</button>
+            <button type="submit"  name={{../tname}} value="{{../tname}}"  class="btn btn-primary">UPDATE {{tname}}</button>
             </div>
         </form>
+        {{/each}}
     {{/ifEquals}}
 
     {{#ifEquals tname "Rooms"}}
+        {{#each rows}}
     {{!--  coulmnArray = ['ID','Name','Price','No of Rooms','No Of Guests']; --}}
-        <form>
+        <form method="POST" action="/update">
             <div class="row">
                 <div class="mb-3 col-6">
                     <label for="disabledTextInput" class="form-label">ID</label>
-                    <input type="text" id="disabledTextInput" class="form-control" value='1' disabled>
+                    <input  type="text" id="disabledTextInput" class="form-control" value={{this.ID}} disabled>
+                     <input type="hidden" name="rid"  value="{{this.ID}}">
                 </div>
                 <div class="mb-3 col-6">
                     <label for="disabledTextInput" class="form-label">NAME</label>
-                    <input type="text" id="disabledTextInput" class="form-control">
+                    <input name="rname" type="text" id="disabledTextInput" class="form-control" value={{this.Name}}>
                 </div>
             </div>
             <div class="row">
                 <div class="mb-3 col-6">
                     <label for="disabledTextInput" class="form-label">Price</label>
-                    <input type="text" id="disabledTextInput" class="form-control">
+                    <input name="rprice" type="text" id="disabledTextInput" class="form-control" value={{this.Price}}>
                 </div>
                 <div class="mb-3 col-6">
                     <label for="disabledTextInput" class="form-label">No of rooms</label>
-                    <input type="text" id="disabledTextInput" class="form-control">
+                    <input name="rnmr" type="text" id="disabledTextInput" class="form-control" value={{this.NoOfRooms}}>
                 </div>
                 
                 <div class="mb-3 col-6">
                     <label for="disabledTextInput" class="form-label">No of Guest</label>
-                    <input type="text" id="disabledTextInput" class="form-control">
+                    <input name="rnmg" type="text" id="disabledTextInput" class="form-control" value={{this.NoOfGuests}}>
+                </div>
+                <div class="mb-3 col-6">
+                    <label for="disabledTextInput" class="form-label">Description</label>
+                    <input name="rdesc" type="text" id="disabledTextInput" class="form-control" value={{this.description}}>
                 </div>
             </div>
             <div class="mb-3 col-3">
-                <button type="submit" class="btn btn-primary">UPDATE</button>
+                <button type="submit" name={{../tname}} value="{{../tname}}" class="btn btn-primary">UPDATE {{tname}}</button>
             </div>
-        
         </form>
-    {{/ifEquals}}
-                                                
+        {{/each}}
+    {{/ifEquals}}  
+
+    {{#ifEquals tname "Add"}}
+    {{#each rows}}
+    {{!-- coulmnArray = ['ID','Name','Email','Password','Del_id']; --}}
+        <form method="POST" action="/update">
+             <div class="mb-3 col-6">
+                <label for="disabledTextInput" class="form-label">NAME</label>
+                <input name="mname" type="text" id="disabledTextInput" class="form-control" value=" ">
+            </div>
+             
+            <div class="mb-3 col-6">
+                <label for="exampleInputEmail1" class="form-label">Email </label>
+                <input name="memail" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value=" ">
+            </div>
+            <div class="mb-3 col-6">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input name="mpass" type="password" class="form-control" id="exampleInputPassword1" value=" ">
+            </div>
+             <div class="mb-3 col-6">
+                <label for="disabledTextInput" class="form-label">Status</label>
+                <input name="mstatus" type="text" id="disabledTextInput" class="form-control" value=" ">
+            </div>
+            <div class="mb-3 col-3">
+            <button name={{../tname}} value="{{../tname}}" type="submit" class="btn btn-primary">UPDATE </button>
+            </div>
+        </form>
+        {{/each}}
+    {{/ifEquals}}                                   
 </body>
 </html>

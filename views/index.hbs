@@ -62,6 +62,7 @@
     <br>
     <section>
     <div id="booking" class="section">
+
                 {{#ifEquals value "login"}}
                         <div class="alert alert-primary alert-dismissible fade show text-center" role="alert">
                       Hello<strong> {{removedUser}}</strong>, you have logged in succesfully!
@@ -154,13 +155,18 @@
                 {{#each avail}}
                  <tr>
 									<td><strong>{{this.Name}}</strong></td>
-									<td><strong>{{this.NoOfGuests}}/Room</strong></td>
+									{{!-- <td><strong>{{this.NoOfGuests}}/Room</strong></td> --}}
 									<td><strong>{{this.Price}}/day</strong></td>		
-                  <td>
+                  
                     	<div class="form-btn">
-									<button class="submit-btn btn btn-primary">Book Now</button>
-								</div>
-                  </td>
+                        <form method="POST" action="/booking">
+                        <input type="hidden" name="amount" value={{this.Price}}>
+                        <input type="hidden" name="roomid" value={{this.ID}}>
+                      <td><input type="number" name="guestC"  max="{{mult this.NoOfGuests ../det.rooms}}" placeholder="No. Of Guests" required></td>
+									<td><button type="submit" name="book" value="{{this.Name}}" class="submit-btn btn btn-primary">Book Now</button></td>
+								</form>
+                </div>
+            
 								</tr>
                 {{/each}}
                 {{else}}

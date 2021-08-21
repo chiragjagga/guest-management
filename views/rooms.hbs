@@ -29,55 +29,68 @@
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
             <div class="container-fluid">
               <a class="navbar-brand" href="#">
-                <img src="images/logo.jpg" alt="logo" style="width: 50px; height: 50px; border-radius: 50%;"></a>
+                <img src="images/logo.jpg" href="/" alt="logo" style="width: 50px; height: 50px; border-radius: 50%;"></a>
               <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">Home</a>
+                    <a class="nav-link" aria-current="page" href="/">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="/about">About</a>
                   </li>
                   
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Rooms</a>
+                    <a class="nav-link" href="/rooms">Rooms</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
+                    <a class="nav-link" href="/contact">Contact</a>
                   </li>
                 </ul>
-                <ul class="navbar-nav ms-auto">
-                    <button class="btn btn-primary"><img src="images/loginlogo.png" style="width:20px; height:25px; border-radius:100%; margin-right: 10px;" alt="sign up">Login</button> 
-                </ul>
+
+                {{#if removedUser}}
+                    <ul class="navbar-nav ms-auto">
+                          <button class="btn btn-primary" type="button">
+                            <img src="images/loginlogo.png" style="width:20px; height:25px; border-radius:100%; margin-right: 10px;" alt="sign up">
+                            <a href="/logout" style="width:auto; text-decoration: none; color:white;" aria-current="page"> Logout</a></button>
+                    </ul>
+                {{else}}
+                    <ul class="navbar-nav ms-auto">
+                        <button class="btn btn-primary" type="button">
+                          <img src="images/loginlogo.png" style="width:20px; height:25px; border-radius:100%; margin-right: 10px;" alt="sign up">
+                          <a href="user" style="text-decoration: none; color:white ;">Login</a></button> 
+                    </ul>
+                {{/if}}
               </div>
             </div>
           </nav>
     </header>
   
     <section>
+      {{#each rows}}
       <div class="card mb-3 text-white" style="max-width: 100%; margin:40px; background-color:#3C415C">
         <div class="row g-0">
           <div class="col-md-4">
-            <img src="room3.jpg" class="img-fluid rounded-start" style="width:100%" alt="...">
+            <img src="images/{{this.Imagepath}}.jpg" class="img-fluid rounded-start" style="width:100%" alt="...">
           </div>
           <div class="col-md-8">
             <div class="card-body">
-              <h2 class="card-title">INTERNATIONAL HOTEL</h2>
-              <h3>3 BEDDED</h3>
-              <h4>450 per day</h4>
+              <h2 class="card-title">{{this.Name}}</h2>
+              <h3>{{this.NoOfGuests}} Bedded</h3>
+              <h4>Rs.{{this.Price}}/day</h4>
               <br>
-              <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam aliquam placeat dolores quia aspernatur voluptatem accusantium perspiciatis dolorem error fuga tenetur quisquam atque aut saepe, magnam modi voluptatibus nostrum temporibus architecto in, consequuntur earum! Optio praesentium, ut beatae recusandae facilis tenetur, fugiat itaque sed natus odit eaque voluptatibus ex nisi?</p>
+              <p class="card-text">{{this.description}}</p>
             </div>
           </div>
         </div>
       </div>
-      <div class="card mb-3 text-white" style="max-width: 100%; margin:40px; background-color:#3C415C">
+       {{/each}}
+      {{!-- <div class="card mb-3 text-white" style="max-width: 100%; margin:40px; background-color:#3C415C">
         <div class="row g-0">
           <div class="col-md-4">
-            <img src="room3.jpg" class="img-fluid rounded-start" style="width:100%" alt="...">
+            <img src="images/room3.jpg" class="img-fluid rounded-start" style="width:100%" alt="...">
           </div>
           <div class="col-md-8">
             <div class="card-body">
@@ -93,7 +106,7 @@
       <div class="card mb-3 text-white" style="max-width: 100%; margin:40px; background-color:#3C415C">
         <div class="row g-0">
           <div class="col-md-4">
-            <img src="room3.jpg" class="img-fluid rounded-start" style="width:100%" alt="...">
+            <img src="images/room3.jpg" class="img-fluid rounded-start" style="width:100%" alt="...">
           </div>
           <div class="col-md-8">
             <div class="card-body">
@@ -121,7 +134,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
     </section>
 </body>
 </html>

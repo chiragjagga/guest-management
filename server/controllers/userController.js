@@ -4,7 +4,6 @@ const e = require('express');
 const { json } = require('body-parser');
 
 var session;
-
 // Connection Pool
 let connection = mysql.createConnection({
   host: process.env.DB_HOST,
@@ -25,12 +24,18 @@ exports.view = (req, res) => {
     if (!err) {
       session=req.session;
       const value=req.query.referer;
-      let removedUser=session.userid;
+      let removedUser;
+      if(session.type=="user") {removedUser=session.userid;}
       console.log(session.avail);
       let avail=session.avail;
       let det=session.detail;
       console.log(det);
-      if(avail!=undefined) res.render('index', {avail,rows ,removedUser,value, det});   
+      
+      if(avail!=undefined) {
+        //let gc=parseInt(det.rooms)*avail[0].NoOfGuests;
+        //console.log(gc,det.rooms,avail[0].NoOfGuests,parseInt(det.rooms),parseInt(avail.NoOfGuests),parseInt(det.rooms)*parseInt(avail.NoOfGuests));
+        res.render('index', {avail,rows ,removedUser,value, det});   
+      }
       else res.render('index', {rows ,removedUser,value});
     }     
      else {
@@ -77,6 +82,7 @@ exports.inventory = (req, res) => {
       if (!err) {
         session=req.session;
         session.userid=rno;
+        session.usernm=rows[0].ID;
         let removedUser
         session.type='user';
         res.redirect('/?referer=signup');
@@ -86,16 +92,17 @@ exports.inventory = (req, res) => {
       console.log('The data from user table: \n', rows);
     });
   }else if(tab==0){
-    connection.query('SELECT RollNo, Password from users where RollNO=?',[rno],(err,rows)=>{
+    connection.query('SELECT ID,RollNo, Password from users where RollNO=? and Status="Active"',[rno],(err,rows)=>{
       //console.log(rows[0].RollNo);
       if(rows.length>0)
       {
         const myusername=rows[0].RollNo;
         const mypassword=rows[0].Password;
-      console.log(myusername,mypassword)
+      console.log(rows,myusername,mypassword)
           if(req.body.rno == myusername && req.body.pass == mypassword){
             session=req.session;
             session.userid=req.body.rno;
+            session.usernm=rows[0].ID;
             session.type='user';
             console.log(req.session);
             res.redirect('/?referer=login');
@@ -135,7 +142,7 @@ exports.userpage = (req, res) => {
   // User the connection
    session=req.session;
    console.log("session ",session.userid);
-    if(session.userid){
+    if(session.type=="user"){
       console.log("After login");
       res.redirect('/');
     }else{
@@ -150,7 +157,7 @@ exports.adminview = (req, res) => {
   //res.render('admin')
   session=req.session;
    console.log("session ",session.userid);
-    if(session.userid)
+    if(session.type=="user" || session.type=="admin")
     { 
       if (session.type=="user"){
       console.log("After admin login");
@@ -160,7 +167,6 @@ exports.adminview = (req, res) => {
       }
     }else{
       const errcode=req.query.errorcode;
-      
         res.render('admin',{errcode});
   }
 }
@@ -169,7 +175,7 @@ exports.adminview = (req, res) => {
 exports.admin = (req, res) => {
   const {pass,email}=req.body;
   console.log(pass,email);
-  connection.query('SELECT email, password,name from admin where del_id=0 and email=?',[email],(err,rows)=>{
+  connection.query('SELECT email, password,name from admin where del_id="ACTIVE" and email=?',[email],(err,rows)=>{
     //connection.query('SELECT RollNo, Password from users where RollNO=?',[rno[0]],(err,rows)=>{
     //console.log("12312656");
     //console.log(rows);
@@ -207,6 +213,7 @@ exports.admin = (req, res) => {
 //manage
 exports.manage= (req, res) => {
   //res.render('manage');
+  session=req.session;
   if(session.type=="admin")
   {
     console.log(req.query.type);
@@ -218,17 +225,19 @@ exports.manage= (req, res) => {
     coulmnArray = ['ID','Name','RollNo','Email','Password','status'];
     connection.query('SELECT * from users' ,(err,rows)=>{
     //console.log(rows);
-    res.render('manage', { rows ,coulmnArray,nm})
+    if(req.query.sub) res.render('manage', { rows ,coulmnArray,nm,sub})
+    else res.render('manage', { rows ,coulmnArray,nm})
     console.log(rows,coulmnArray,nm);
     
     });
 
   }else if(req.query.type=="managers"){
       nm="Managers";
-    coulmnArray = ['ID','Name','Email','Password','Del_id'];
+    coulmnArray = ['ID','Name','Email','Password','Status'];
     connection.query('SELECT * from admin' ,(err,rows)=>{
     //console.log(rows);
-    res.render('manage', { rows ,coulmnArray,nm});
+    if(req.query.sub){let sub=req.query.sub; res.render('manage', { rows ,coulmnArray,nm,sub});}
+    else res.render('manage', { rows ,coulmnArray,nm})
     console.log(rows,coulmnArray);
   });
 
@@ -238,7 +247,8 @@ exports.manage= (req, res) => {
               'Room_Id','Room Count','Guest Name','Guest Age','Amount','Status'];
     connection.query('SELECT bookings.ID,RollNo,CheckIn,CheckOut,MobileNumber,Room_Id,RoomCount,GuestName,GuestAge,Amount,bookings.Status from bookings,users where bookings.U_ID=users.ID' ,(err,rows)=>{
     console.log(rows[0],rows[1]);
-    res.render('manage', { rows ,coulmnArray,nm})
+    if(req.query.sub){let sub=req.query.sub; res.render('manage', { rows ,coulmnArray,nm,sub});}
+    else res.render('manage', { rows ,coulmnArray,nm})
     console.log(rows,coulmnArray);
   });
 
@@ -247,7 +257,8 @@ exports.manage= (req, res) => {
     coulmnArray = ['ID','Name','Price','No of Rooms','No Of Guests'];
     connection.query('SELECT ID,Name,Price,NoOfRooms,NoOfGuests from rooms' ,(err,rows)=>{
     //console.log(rows);
-    res.render('manage', { rows ,coulmnArray,nm})
+    if(req.query.sub){let sub=req.query.sub; res.render('manage', { rows ,coulmnArray,nm,sub});}
+    else res.render('manage', { rows ,coulmnArray,nm})
     console.log(rows,coulmnArray);
   });
   }
@@ -257,6 +268,17 @@ exports.manage= (req, res) => {
     
     coulmnArray = ['ID','Name','RollNo','Email','Password','status'];
     connection.query('SELECT * from users' ,(err,rows)=>{
+    //console.log(rows);
+    res.render('manage', { rows ,coulmnArray,nm,dnm})
+    console.log(rows,coulmnArray,nm,dnm);
+  });
+  }
+  else if(req.query.type=="feedback"){
+    nm="Feedback";
+    let dnm=session.deluser;
+    
+    coulmnArray = ['ID','Name','Email','Feedback','Date'];
+    connection.query('SELECT * from Contact' ,(err,rows)=>{
     //console.log(rows);
     res.render('manage', { rows ,coulmnArray,nm,dnm})
     console.log(rows,coulmnArray,nm,dnm);
@@ -272,23 +294,75 @@ exports.manage= (req, res) => {
 }
 
 exports.rooms = (req, res) => {  
-    res.render('rooms');
-}
+    session=req.session;
+    let removedUser;
+    if(session.type=="user") {removedUser=session.userid;}
+    connection.query('SELECT * FROM rooms', (err, rows) => {
+        if(!err) res.render('rooms',{rows,removedUser});
+        else console.log(err);
+      });
+    }
 
 exports.about = (req, res) => {  
-  res.render('about');
+  session=req.session;
+  let removedUser;
+    if(session.type=="user") {removedUser=session.userid;}
+  res.render('about',{removedUser});
 }
 
-exports.contact = (req, res) => {  
-  res.render('contact');
+exports.contact = (req, res) => { 
+  session=req.session;
+  let removedUser,subm;
+  if(req.query.subm!=undefined) subm=1;
+  if(session.type=="user") {removedUser=session.userid;}
+  res.render('contact',{removedUser,subm});  
 }
 
-exports.adminUpdateForm = (req, res) => {  
-  
- //res.render('adminUpdateForm',{});
+exports.contactsub = (req, res) => { 
+  session=req.session;
+  let removedUser,subm;
+  if(req.query.subm!=undefined) subm=1;
+  if(session.type=="user") {removedUser=session.userid;}
+  const{fname,lname,email,feedback}=req.body;
+  let name=fname+" "+lname;
+  var tdate = (new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 19).replace('T', ' ');
+  connection.query('INSERT INTO Contact SET Name=?, Email= ?, Feedback = ?, Date = ?', [name,email,feedback,tdate], (err, rows) => {
+    if(!err) res.redirect('/contact?subm=1');
+    else console.log(err);
+  });
 }
 
-exports.update = (req, res) => { 
+exports.updatedata = (req, res) => {  
+      const{uid,uname,urno,uemail,upass,ustatus,mid,memail,mname,mpass,mstatus,bid,bname,bcin,bcout,bmno,brid,brc,brgname,brgage,bamt,bstatus,rid,rname,rprice,rnmr,rnmg,rdesc,Users,Managers,Rooms,Bookings}=req.body;
+      console.log(uid,uname,urno,uemail,upass,ustatus,mid,memail,mname,mpass,mstatus,bid,bname,bcin,bcout,bmno,brid,brc,brgname,brgage,bamt,bstatus,rid,rname,rprice,rnmr,rnmg,rdesc,Users,Managers,Rooms,Bookings)
+      if(Users!=undefined){
+        connection.query('UPDATE users SET Name=?, RollNo = ?, Email = ?, Password = ?, Status = ? where ID=?', [uname,urno,uemail,upass,ustatus,uid], (err, rows) => {
+            if(!err) res.redirect('/manage?type=userManage&sub=User');
+            else console.log(err);
+        });
+      }
+        else if(Managers!=undefined){
+          connection.query('UPDATE admin SET Email=?, name= ?, password = ?, del_id = ? where ID=?', [memail,mname,mpass,mstatus,mid], (err, rows) => {
+            if(!err) res.redirect('/manage?type=managers&sub=Manager');
+            else console.log(err);
+        });
+        }
+        else if(Bookings!=undefined){
+          connection.query('UPDATE bookings SET U_ID=?, CheckIn=?, CheckOut=?, MobileNumber=?,Room_Id=?, RoomCount=?, GuestName=?, GuestAge=?, Amount=?, Status=? where ID=?', [bname,bcin,bcout,bmno,brid,brc,brgname,brgage,bamt,bstatus,bid], (err, rows) => {
+            if(!err) res.redirect('/manage?type=bookingsManage&sub=Booking');
+            else console.log(err);
+        });
+        }
+        else if(Rooms!=undefined){
+          connection.query('UPDATE rooms SET Name=?, Price=?, NoOfRooms=?, NoOfGuests=?,description=? where ID=?', [rname,rprice,rnmr,rnmg,rdesc,rid], (err, rows) => {
+            if(!err) res.redirect('/manage?type=rooms&sub=Room');
+            else console.log(err);
+        });
+        }
+      }
+
+exports.update = (req, res) => {
+  session=req.session; 
   if(session.type=="admin")
   { 
     console.log("test"+req.body.tt);
@@ -299,7 +373,7 @@ exports.update = (req, res) => {
     }
     else if(tname=="Managers"){
         tname="admin";
-        coulmnArray = ['ID','Name','Email','Password','Del_id'];
+        coulmnArray = ['ID','Name','Email','Password','Status'];
   }
     else if(tname=="Bookings") {
       coulmnArray = ['Booking ID','Roll No','CheckIn','CheckOut','Mobile Number',
@@ -315,18 +389,45 @@ exports.update = (req, res) => {
       //const upchk=1;
       console.log('SELECT * from '+tname +' where ID=?',[req.body.upd]);
       tname=req.body.tt;
-      res.render('adminUpdateForm', {rows})
+      res.render('adminUpdateForm', {rows,tname})
       console.log(rows,tname);
     });
   }
 }
 
-exports.booking = (req, res) => {  
-  res.render('booking');
+exports.booking = (req, res) => { 
+  session=req.session; 
+  if(session.details) res.render('booking');
+  else res.redirect('/?referer=bkg');
+}
+
+exports.bookingpost = (req, res) => { 
+    session=req.session; 
+    const {guestC,book,amount,roomid}=req.body;
+    if(session.userid==undefined){
+      res.redirect('/user?errorcode=notLogged');
+    }
+    else {
+      console.log(guestC,book,amount);
+    console.log(session);
+    let det=session.detail;
+    let unm=session.userid;
+    console.log(unm);
+    res.render('booking',{det,guestC,book,amount,roomid,unm});
+    }
 }
 
 exports.bookingConfirmation = (req, res) => {  
-  res.render('bookingConfirmation');
+    session=req.session;
+    const{fname,age,email,rno,mob,amt,tamt,roomid}=req.body;
+    let det=session.detail;
+    let unm=session.usernm;
+    console.log(unm,fname,age,email,rno,mob,amt,tamt,roomid);
+    connection.query('INSERT INTO bookings SET U_ID=?, CheckIn=?, CheckOut=?, MobileNumber=?,Room_Id=?, RoomCount=?, GuestName=?, GuestAge=?, Amount=?',[unm,det.cin,det.cout,mob,roomid,det.rooms,fname,age,tamt] ,(err,rows)=>{
+      console.log(rows);
+      if(!err) res.render('bookingConfirmation',{rows,fname,age,email,rno,mob,amt,tamt,roomid,det});
+      else console.log(err);
+    });
 }
 
 exports.delete=(req,res)=>{
