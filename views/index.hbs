@@ -64,6 +64,7 @@
     <div id="booking" class="section">
 
                 {{#ifEquals value "login"}}
+                        <br>
                         <div class="alert alert-primary alert-dismissible fade show text-center" role="alert">
                       Hello<strong> {{removedUser}}</strong>, you have logged in succesfully!
                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -71,6 +72,7 @@
                 {{/ifEquals}}
 
                 {{#ifEquals value "logout"}}
+                        <br>
                         <div class="alert alert-primary alert-dismissible fade show text-center" role="alert">
                        <strong> {{removedUser}}</strong> You have been logged out succesfully!
                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -78,6 +80,7 @@
                 {{/ifEquals}}
 
                 {{#ifEquals value "signup"}}
+                        <br>
                         <div class="alert alert-primary alert-dismissible fade show text-center" role="alert">
                        Hey <strong> {{removedUser}}</strong>, you have signed up succesfully!
                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -117,20 +120,6 @@
 											<span class="select-arrow"></span>
 										</div>
 									</div>
-									{{!-- <div class="col-sm-6">
-										<div class="form-group">
-											<span class="form-label">Guest count</span>
-											<select class="form-control">
-												<option>No. of guests</option>
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-												<option>5</option>
-											</select>
-											<span class="select-arrow"></span>
-										</div>
-									</div> --}}
 								</div>
 								<div class="form-btn">
 									<center><button class="submit-btn">Check availability</button></center>
@@ -162,7 +151,7 @@
                         <form method="POST" action="/booking">
                         <input type="hidden" name="amount" value={{this.Price}}>
                         <input type="hidden" name="roomid" value={{this.ID}}>
-                      <td><input type="number" name="guestC"  max="{{mult this.NoOfGuests ../det.rooms}}" placeholder="No. Of Guests" required></td>
+                      <td><input type="number" name="guestC"  max="{{mult this.NoOfGuests ../det.rooms}}" placeholder="No. Of Guests" required style="border-radius: 5%;"></td>
 									<td><button type="submit" name="book" value="{{this.Name}}" class="submit-btn btn btn-primary">Book Now</button></td>
 								</form>
                 </div>
@@ -221,7 +210,7 @@
         </div>
   
     {{!-- slideshow --}}
-    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel" style="margin-left: 155px; margin-right:155px; margin-top:50px; margin-bottom:50px">
+    <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel" style="margin: 78px">
         <div class="carousel-inner">
           <div class="carousel-item active" data-bs-interval="5000">
             <img src="images/3.png" class="d-block w-100 rounded overflow-auto" alt="..." style="height:300px;">

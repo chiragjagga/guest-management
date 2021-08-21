@@ -14,6 +14,7 @@
 <body>
     
   {{#if removedUser}}
+  <br>
 <div class="alert alert-success alert-dismissible fade show" role="alert">
   User has been removed.
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -31,21 +32,24 @@
 
                           <div class="login-box">
                               {{#ifEquals errcode "inv"}}
-							<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+							<br>
+                            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
 						 Invalid password!
 						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>
 				{{/ifEquals}}
                 
                  {{#ifEquals errcode "notLogged"}}
-							<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+							<br>
+                            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
 						 Please login/signup first to continue booking!
 						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>
 				{{/ifEquals}}
 
 				{{#ifEquals errcode "notExist"}}
-							<div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+							<br>
+                            <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
 						 User not exist!
 						<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 					</div>

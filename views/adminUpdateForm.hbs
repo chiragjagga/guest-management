@@ -14,7 +14,7 @@
     <link href=" assets/css/light-bootstrap-dashboard.css?v=2.0.0 " rel="stylesheet" />
     <title>ADMIN UPDATE FORM</title>
 </head>
-<body>
+<body style="background:rgba(47, 103, 177, 0.6);">
     <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="#pablo"> National Institute of Technology, Calicut </a>
@@ -47,9 +47,9 @@
     </nav>
     
     <div class="card card-plain table-plain-bg">
-         <div class="card-header ">
-                <h2 class="card-title">{{tname}} Table</h2>
-                <h3 class="card-category">Edit {{tname}} </h3>
+         <div class="card-header">
+                <center><h2 class="card-title" style="color:black">{{tname}} Table</h2></center>
+                <center><h3 style="color:black">Edit {{tname}} </h3></center>
             </div>
     </div>
 
@@ -57,52 +57,66 @@
     {{#ifEquals tname "Users"}}
       {{#each rows}}
      {{!-- coulmnArray = ['ID','Name','RollNo','Email','Password','status']; --}}
-       <form method="POST" action="/update">
-            <div class="row">
-                <div class="mb-3 col-3">
+     <center>
+             <div style="width:50%; background:white; margin-bottom:15px">
+       <form method="POST" action="/update" style="width:100%; padding:16px;">
+            <div class="row" style="margin-bottom:15px">
+                <div class="mb-3" style="margin-right:150px">
                     <label for="disabledTextInput" class="form-label">ID</label>
                     <input  type="text" id="disabledTextInput" class="form-control" value="{{this.ID}}" disabled>
                     <input type="hidden" name="uid" value="{{this.ID}}">
                 </div>
-                <div class="mb-3 col-3">
+            </div>
+            <div class="row" style="margin-bottom:15px">
+                <div class="mb-3">
                     <label for="disabledTextInput" class="form-label">NAME</label>
                     <input name="uname" type="text" id="disabledTextInput" class="form-control" value="{{this.Name}}">
                 </div>
             </div>
-            <div class="row">
-                <div class="mb-3 col-3">
+            <div class="row" style="margin-bottom:15px">
+                <div class="mb-3" style="margin-right:150px">
                     <label for="disabledTextInput" class="form-label">RollNo</label>
                     <input name="urno" type="text" id="disabledTextInput" class="form-control" value="{{this.RollNo}}">
                 </div>
-                <div class="mb-3 col-3">
+            </div>
+            <div class="row" style="margin-bottom:15px">
+                <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Email </label>
                     <input name="uemail" type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{this.Email}}">
                 </div>
             </div>
-            <div class="row">
-                <div class="mb-3 col-3">
+            <div class="row" style="margin-bottom:15px">
+                <div class="mb-3" style="margin-right:150px">
                     <label for="exampleInputPassword1" class="form-label">Password</label>
                     <input name="upass" type="password" class="form-control" id="exampleInputPassword1" value="{{this.Password}}">
                 </div>
-                <div class="mb-3 col-3">
+            </div>
+            <div class="row" style="margin-bottom:15px">
+                <div class="mb-3">
                     <label for="disabledTextInput" class="form-label">Status</label>
                     <input name="ustatus" type="text" id="disabledTextInput" class="form-control" value="{{this.Status}}">
                 </div>
             </div>
-            <div class="row">
+            <center>
+                <div class="row">
+                    <center>
                 <div class="col-5"><button type="submit" name={{../tname}} value="{{../tname}}" class="btn btn-primary">UPDATE {{tname}}</button></div>
+                </center>
             </div>
+            </center>
         </form>
     {{/each}}
     {{/ifEquals}}
-    
+    {{!-- done --}}
     {{#ifEquals tname "Managers"}}
     {{#each rows}}
     {{!-- coulmnArray = ['ID','Name','Email','Password','Del_id']; --}}
-        <form method="POST" action="/update">
+         <center>
+            <div style="width:45%; background:white">
+            <form method="POST" action="/update" style="width:100%; padding:8px;">
             <div class="mb-3 col-6">
                 <label for="disabledTextInput" class="form-label">ID</label>
-                <input  type="text" id="disabledTextInput" class="form-control" value={{this.ID}} disabled>
+                    <input  type="text" class="form-control" id="disabledTextInput" style="width:100%" class="form-control" value={{this.ID}} disabled style="width:100%" size="50">
                 <input type="hidden" name="mid" value="{{this.ID}}">
             </div>
              <div class="mb-3 col-6">
@@ -124,8 +138,13 @@
             </div>
             <div class="mb-3 col-3">
             <button name={{../tname}}  type="submit" value="{{../tname}}"  class="btn btn-primary">UPDATE {{tname}}</button>
+            <br>
             </div>
         </form>
+        </div></center>
+        <br>
+        
+        
         {{/each}}
     {{/ifEquals}}
 
@@ -133,7 +152,7 @@
         {{#each rows}}
     {{!-- coulmnArray = ['Booking ID','Roll No','CheckIn','CheckOut','Mobile Number',
       'Room_Id','Room Count','Guest Name','Guest Age','Amount','Status']; --}}
-        <form method="POST" action="/update">
+        <form method="POST" action="/update" style="background:white; margin:25px; padding:15px">
             <div class="row">
                 <div class="mb-3 col-6">
                     <label for="disabledTextInput" class="form-label">ID</label>
@@ -192,8 +211,10 @@
                     <input name="bstatus" type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value={{this.Status}}>
                 </div>
             </div>
-            <div class="mb-3 col-3">
+            <center><div class="mb-3 col-3">
+                <br>
             <button type="submit"  name={{../tname}} value="{{../tname}}"  class="btn btn-primary">UPDATE {{tname}}</button>
+            </center>
             </div>
         </form>
         {{/each}}
@@ -202,7 +223,7 @@
     {{#ifEquals tname "Rooms"}}
         {{#each rows}}
     {{!--  coulmnArray = ['ID','Name','Price','No of Rooms','No Of Guests']; --}}
-        <form method="POST" action="/update">
+        <form method="POST" action="/update" style="background:white; margin:25px; padding:15px">
             <div class="row">
                 <div class="mb-3 col-6">
                     <label for="disabledTextInput" class="form-label">ID</label>
@@ -233,9 +254,10 @@
                     <input name="rdesc" type="text" id="disabledTextInput" class="form-control" value={{this.description}}>
                 </div>
             </div>
-            <div class="mb-3 col-3">
+            <center><div class="mb-3 col-3">
+                <br>
                 <button type="submit" name={{../tname}} value="{{../tname}}" class="btn btn-primary">UPDATE {{tname}}</button>
-            </div>
+            </div></center>
         </form>
         {{/each}}
     {{/ifEquals}}  
@@ -266,6 +288,7 @@
             </div>
         </form>
         {{/each}}
-    {{/ifEquals}}                                   
+    {{/ifEquals}} 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-U1DAWAznBHeqEIlVSCgzq+c9gqGAJn5c/t99JyeKa9xxaYpSvHU5awsuZVVFIhvj" crossorigin="anonymous"></script>                                  
 </body>
 </html>
