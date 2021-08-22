@@ -47,26 +47,34 @@ exports.view = (req, res) => {
 
 exports.inventory = (req, res) => { 
   const {cin,cout,rooms}=req.body;
-  console.log(req.body);
-  connection.query('SELECT * from rooms,(SELECT Room_Id,SUM(RoomCount) as sum FROM bookings bk WHERE (bk.CheckIn BETWEEN ? and ?) OR (bk.CheckOut BETWEEN ? and ?) OR (bk.CheckIn<? AND bk.CheckOut>?) GROUP BY Room_Id )AS totals WHERE rooms.ID = totals.Room_Id and ?<=10-sum GROUP BY Room_Id', [cin,cout,cin,cout,cin,cout,rooms], (err, rows) =>{
-    console.log("query part");
-    if(!err){
-      console.log("query chali");
-      // let arr="";
-      // for(let i=0;i<rows.length;i++){
-      //   if(i==rows.length-1) arr+="'"+rows[i].Room_Id+"'";
-      //   else arr+="'"+rows[i].Room_Id+"',";
-      // } 
-      session=req.session;
-      session.avail=rows;
-      session.detail=req.body;
-      res.redirect('/');
-    }
-    else{
-      console.log("error");
-      console.log(err);
-    }
-  });
+  var tdate = (new Date ((new Date((new Date(new Date())).toISOString() )).getTime() - ((new Date()).getTimezoneOffset()*60000))).toISOString().slice(0, 10).replace('T', ' ');
+  console.log("date=",cin, cout, tdate);
+  if(cin<cout && cin>=tdate)
+  {
+    console.log(req.body);
+    connection.query('SELECT * from rooms,(SELECT Room_Id,SUM(RoomCount) as sum FROM bookings bk WHERE (bk.CheckIn BETWEEN ? and ?) OR (bk.CheckOut BETWEEN ? and ?) OR (bk.CheckIn<? AND bk.CheckOut>?) GROUP BY Room_Id )AS totals WHERE rooms.ID = totals.Room_Id and ?<=10-sum GROUP BY Room_Id', [cin,cout,cin,cout,cin,cout,rooms], (err, rows) =>{
+      console.log("query part");
+      if(!err){
+        console.log("query chali");
+        // let arr="";
+        // for(let i=0;i<rows.length;i++){
+        //   if(i==rows.length-1) arr+="'"+rows[i].Room_Id+"'";
+        //   else arr+="'"+rows[i].Room_Id+"',";
+        // } 
+        session=req.session;
+        session.avail=rows;
+        session.detail=req.body;
+        res.redirect('/');
+      }
+      else{
+        console.log("error");
+        console.log(err);
+      }
+    });
+}else{
+    console.log("date Invalid");
+    res.redirect('/?referer=invDate');
+}
 };
 //user login/signup
  exports.user = (req, res) => {
@@ -200,7 +208,7 @@ exports.admin = (req, res) => {
             session.type='admin';
             console.log(req.session);
 
-            res.redirect('/manage?type=dashboard');
+            res.redirect('/manage?type=managers');
         }
         else{
           
@@ -293,7 +301,7 @@ exports.manage= (req, res) => {
   });
   }
   else if(req.query.type=="dashboard" ||res.query==undefined){
-    nm="Dashboard";
+    nm="managers";
     res.render('manage', {nm})
   }
   }else{

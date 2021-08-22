@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 21, 2021 at 04:16 PM
+-- Generation Time: Aug 22, 2021 at 03:49 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 7.4.13
 
@@ -40,7 +40,8 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`ID`, `name`, `email`, `password`, `del_id`) VALUES
-(1, 'admin', 'admin@test.com', 'admin', 'Active');
+(1, 'admin', 'admin@test.com', 'admin', 'Active'),
+(2, 'chirag', 'chirag@test.com', 'chirag', 'Active');
 
 -- --------------------------------------------------------
 
@@ -67,7 +68,7 @@ CREATE TABLE `bookings` (
 --
 
 INSERT INTO `bookings` (`ID`, `U_ID`, `CheckIn`, `CheckOut`, `MobileNumber`, `Room_Id`, `RoomCount`, `GuestName`, `GuestAge`, `Amount`, `Status`) VALUES
-(1, 1, '2021-08-20', '2021-08-22', 1234567890, 1, 2, ' abc', '30', 900, 'Confirmed'),
+(1, 1, '2021-08-20', '2021-08-22', 1234567890, 1, 2, 'abc', '30', 900, 'Confirmed'),
 (2, 5, '2021-08-20', '2021-08-25', 875432154, 2, 1, 'asdfgh', '25', 2000, 'Confirmed'),
 (3, 3, '2021-08-25', '2021-08-26', 875454154, 3, 1, 'abc', '25', 2000, 'Confirmed'),
 (4, 6, '2021-08-24', '2021-08-30', 2147483647, 4, 3, 'qwertyfgh', '15,25,30', 1500, 'Confirmed'),
@@ -82,7 +83,10 @@ INSERT INTO `bookings` (`ID`, `U_ID`, `CheckIn`, `CheckOut`, `MobileNumber`, `Ro
 (13, 1, '2021-08-21', '2021-08-25', 5646465454, 4, 2, 'chirag', '22', 500, 'Confirmed'),
 (14, 1, '2021-08-25', '2021-08-26', 6464534656, 3, 3, 'fghjb', '25', 750, 'Confirmed'),
 (15, 1, '2021-08-25', '2021-08-26', 6464649674, 3, 2, 'qwerty', '20', 500, 'Confirmed'),
-(16, 1, '2021-08-25', '2021-08-26', 6464649674, 3, 2, 'qwerty123', '20', 500, 'Confirmed');
+(16, 1, '2021-08-25', '2021-08-26', 6464649674, 3, 2, 'qwerty123', '20', 500, 'Confirmed'),
+(17, 1, '2021-08-22', '2021-08-24', 1646416464, 1, 2, 'fgchvbjkn', '62', 2000, 'Confirmed'),
+(18, 17, '2021-08-23', '2021-08-24', 7458963214, 1, 3, 'chirag', '22', 3000, 'Confirmed'),
+(19, 1, '2021-08-23', '2021-08-25', 1645656526, 1, 2, 'Tushar', '20', 900, 'Confirmed');
 
 -- --------------------------------------------------------
 
@@ -127,7 +131,7 @@ CREATE TABLE `rooms` (
 --
 
 INSERT INTO `rooms` (`ID`, `Name`, `Price`, `NoOfRooms`, `NoOfGuests`, `description`, `Imagepath`) VALUES
-(1, 'International', 1000, 10, 4, 'abcdefghijklmnopqrstuv', 'room1'),
+(1, 'International', 450, 10, 3, 'abcdefghijklmnopqrstuv', 'room1'),
 (2, 'G Hostel', 250, 10, 2, '', 'room2'),
 (3, 'PG-2 ', 250, 10, 2, '', 'room3'),
 (4, 'SAC', 250, 10, 2, '', 'room4');
@@ -154,7 +158,11 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`ID`, `Name`, `RollNo`, `Email`, `Password`, `Status`) VALUES
 (1, 'Tushar khandelwal', 'M200724CA', 'tusharkhandelwal81@gmail.com', '13162', 'Active'),
 (3, 'chirag jagga', 'M200123CA', 'cj26@gmail.com', '123456', 'Active'),
-(9, 'test', 'test', 'test@test.com', 'test', 'Active');
+(9, 'test', 'test', 'test@test.com', 'test', 'Active'),
+(14, 'qwerty', '123456', 'qwerty@test.com', '123456', 'Active'),
+(15, 'asdfgh', '963', 'asdfgh@test.com', '963', 'Active'),
+(16, 'Tarushi', 'M200723CA', 'tarushi@test.com', 'tarushi', 'Active'),
+(17, 'chirag jagga', 'M200669CA', 'chirag@test.com', 'chirag', 'Active');
 
 --
 -- Indexes for dumped tables
@@ -198,13 +206,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `contact`
@@ -222,7 +230,7 @@ ALTER TABLE `rooms`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -86,6 +86,15 @@
                       <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                   </div>
                 {{/ifEquals}}
+
+                {{#ifEquals value "invDate"}}
+                        <br>
+                        <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
+                        Invalid Date,  Please Enter valid checkIn & checkout date !
+                      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                  </div>
+                {{/ifEquals}}
+
 		<div class="section-center">
 			<div class="container">
 				<div class="row">
@@ -96,7 +105,7 @@
 									<div class="col-sm-6">
 										<div class="form-group">
 											<span class="form-label">Check In</span>
-											<input class="form-control" name ="cin" type="date" value="{{det.cin}}" required>
+											<input class="form-control" id="cin" name ="cin" type="date" value="{{det.cin}}" required>                        
 										</div>
 									</div>
 									<div class="col-sm-6">
@@ -212,17 +221,17 @@
     {{!-- slideshow --}}
     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel" style="margin: 78px">
         <div class="carousel-inner">
-          <div class="carousel-item active" data-bs-interval="5000">
-            <img src="images/3.png" class="d-block w-100 rounded overflow-auto" alt="..." style="height:300px;">
-          </div>
-          <div class="carousel-item" data-bs-interval="600">
-            <img src="images/2.jpg" class="d-block w-100 rounded overflow-auto" alt="..." style="height:300px">
+          <div class="carousel-item active" data-bs-interval="500">
+            <img src="images/3.png" class="d-block w-100 rounded overflow-auto" alt="..." style="height:400px;">
           </div>
           <div class="carousel-item" data-bs-interval="500">
-            <img src="images/image.jpg" class="d-block w-100 rounded overflow-auto" alt="..." style="height:300px">
+            <img src="images/2.jpg" class="d-block w-100 rounded overflow-auto" alt="..." style="height:400px">
           </div>
           <div class="carousel-item" data-bs-interval="500">
-            <img src="images/4.jpg" class="d-block w-100 rounded overflow-auto" alt="..." style="height:300px">
+            <img src="images/image.jpg" class="d-block w-100 rounded overflow-auto" alt="..." style="height:400px">
+          </div>
+          <div class="carousel-item" data-bs-interval="500">
+            <img src="images/4.jpg" class="d-block w-100 rounded overflow-auto" alt="..." style="height:400px">
           </div>
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
